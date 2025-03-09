@@ -24,13 +24,13 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
 
     @NonNull
     @Override
-    public calendarPage_Adapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.calendar_todolist_layout, parent, false);
-        return new calendarPage_Adapter.MyViewHolder(view);
+        return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull calendarPage_Adapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         dataSets data = dataSet.get(position);
         holder.title.setText(data.getTitle());
         holder.date.setText(data.getDate());
