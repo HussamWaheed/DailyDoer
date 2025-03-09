@@ -8,11 +8,11 @@ import java.util.Date;
 public class dataSets {
 
     public String title;
-    public Date date;
-    public Time time;
+    public String date;
+    public String time;
     public String description;
 
-    public dataSets(String title, Date date, Time time, String description){
+    public dataSets(String title, String date, String time, String description){
         this.title = title;
         this.date = date;
         this.time = time;
@@ -20,8 +20,8 @@ public class dataSets {
     }
 
     public String getTitle(){return title;}
-    public Date getDate(){return date;}
-    public Time getTime(){return time;}
+    public String getDate(){return date;}
+    public String getTime(){return time;}
     public String getDescription(){return description;}
 
 }
