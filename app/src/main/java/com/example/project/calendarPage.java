@@ -20,13 +20,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 
 public class calendarPage extends AppCompatActivity {
     ArrayList<dataSets> dataSet = new ArrayList<>();
     RecyclerView recyclerView;
     CalendarView calendarView;
-
     TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +41,14 @@ public class calendarPage extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         dataSet.add(new dataSets("Task 1", "3-21-2025", "1:00 - 3:00pm", "task 1"));
-        dataSet.add(new dataSets("Task 2", "3-22-2025","10:00 - 11:30am","task 2"));
-        dataSet.add(new dataSets("Task 3", "3-23-2025","8:15 - 3:00pm","task 3"));
+        dataSet.add(new dataSets("Task 2", "3-21-2025","10:00 - 11:30am","task 2"));
+        dataSet.add(new dataSets("Task 2", "3-22-2025","10:00 - 11:30am","task 1"));
+        dataSet.add(new dataSets("Task 3", "3-23-2025","8:15 - 3:00pm","task 1"));
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int year, int month, int day) {
                 String date = (month+1)+"-"+day+"-"+year;
-                textView.setText(date);
                 ArrayList<dataSets> dateList = new ArrayList<>();
                 for (dataSets data:dataSet){
                     if (data.getDate().equals(date)){
@@ -55,6 +56,7 @@ public class calendarPage extends AppCompatActivity {
                     }
                 }
                 calendarPage_Adapter myAdapter = new calendarPage_Adapter(dateList);
+                myAdapter.setDataSet(dataSet);
                 recyclerView.setAdapter(myAdapter);
             }
         });

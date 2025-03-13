@@ -16,9 +16,15 @@ import java.util.ArrayList;
 
 public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adapter.MyViewHolder> {
 
+    ArrayList<dataSets> dateList;
+
     ArrayList<dataSets> dataSet;
 
-    public calendarPage_Adapter(ArrayList<dataSets> dataSet){
+    public calendarPage_Adapter(ArrayList<dataSets> dateList){
+        this.dateList = dateList;
+    }
+
+    public void setDataSet(ArrayList<dataSets> dataSet){
         this.dataSet = dataSet;
     }
 
@@ -31,10 +37,10 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        dataSets data= dataSet.get(position);
+        dataSets data= dateList.get(position);
         holder.title.setText(data.getTitle());
         holder.date.setText(data.getDate());
-        holder.duration.setText(data.getTime().toString());
+        holder.duration.setText(data.getTime());
         holder.description.setText(data.getDescription());
         holder.checkBox.setText("Done");
         holder.linearLayout.setVisibility(View.VISIBLE);
@@ -42,10 +48,13 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
 
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (holder.checkBox.isChecked()){
-                dataSet.remove(position);
+                if (dataSet.contains(dateList.get(position))){
+                    dataSet.remove(dateList.get(position));
+                }
+                dateList.remove(position);
                 holder.linearLayout.setVisibility(View.GONE);
                 notifyItemRemoved(position);
-                notifyItemRangeChanged(position, dataSet.size());
+                notifyItemRangeChanged(position, dateList.size());
 
             }
         });
@@ -55,7 +64,7 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
 
     @Override
     public int getItemCount() {
-        return dataSet.size();
+        return dateList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
