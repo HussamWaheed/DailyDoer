@@ -1,5 +1,6 @@
 package com.example.project;
 
+import android.view.View;
 import android.widget.CheckBox;
 
 import java.sql.Time;
@@ -11,6 +12,7 @@ public class dataSets {
     public String date;
     public String time;
     public String description;
+
 
     public dataSets(String title, String date, String time, String description){
         this.title = title;

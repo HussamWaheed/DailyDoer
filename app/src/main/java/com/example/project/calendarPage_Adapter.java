@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,7 +17,6 @@ import java.util.ArrayList;
 public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adapter.MyViewHolder> {
 
     ArrayList<dataSets> dataSet;
-    Context context;
 
     public calendarPage_Adapter(ArrayList<dataSets> dataSet){
         this.dataSet = dataSet;
@@ -31,13 +31,27 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        dataSets data = dataSet.get(position);
+        dataSets data= dataSet.get(position);
         holder.title.setText(data.getTitle());
         holder.date.setText(data.getDate());
         holder.duration.setText(data.getTime().toString());
         holder.description.setText(data.getDescription());
         holder.checkBox.setText("Done");
+        holder.linearLayout.setVisibility(View.VISIBLE);
+        holder.checkBox.setOnCheckedChangeListener(null);
+
+        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (holder.checkBox.isChecked()){
+                dataSet.remove(position);
+                holder.linearLayout.setVisibility(View.GONE);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, dataSet.size());
+
+            }
+        });
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -58,6 +72,7 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
             description = itemView.findViewById(R.id.description);
             checkBox = itemView.findViewById(R.id.checkBox);
         }
+
     }
 
 }
