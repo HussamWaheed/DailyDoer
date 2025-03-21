@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@android:color/white">
+
+    <EditText
+        android:id="@+id/taskInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="What do you need to do?"
+        android:background="@drawable/popup_background"
+        android:padding="12dp"
+        android:textColor="#1C1C1E"
+        android:textSize="16sp"
+        android:textColorHint="#8E8E93" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:textColor="@android:color/white"
+        android:backgroundTint="#007AFF"
+        android:layout_marginTop="16dp"
+        android:padding="12dp" />
+</LinearLayout>
