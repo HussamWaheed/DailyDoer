@@ -44,6 +44,7 @@ public class calendarPage extends AppCompatActivity {
         dataSet.add(new dataSets("Task 2", "3-21-2025","10:00 - 11:30am","task 2"));
         dataSet.add(new dataSets("Task 2", "3-22-2025","10:00 - 11:30am","task 1"));
         dataSet.add(new dataSets("Task 3", "3-23-2025","8:15 - 3:00pm","task 1"));
+        dataSet.add(new dataSets("Task 1", "4-23-2025","8:15 - 3:00pm","task 1"));
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
