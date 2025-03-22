@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,6 +41,7 @@ public class calendarPage extends AppCompatActivity {
     TextView textView;
     FloatingActionButton fab_add;
 
+    ImageButton image_btn;
 
 
     @Override
@@ -51,10 +53,10 @@ public class calendarPage extends AppCompatActivity {
         calendarView = findViewById(R.id.calendarView);
         textView = findViewById(R.id.textView);
         fab_add = findViewById(R.id.fab_addTask);
-
+        image_btn = findViewById(R.id.image_btn);
+        Intent intent = getIntent();
         dbhelper database = new dbhelper(getApplicationContext());
         database.getReadableDatabase();
-
 
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -64,7 +66,7 @@ public class calendarPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent addPage = new Intent(calendarPage.this, addActivity.class);
-                addPage.putExtra("add", "add");
+                addPage.putExtra("add", "calendar");
                 startActivity(addPage);
             }
         });
@@ -91,6 +93,7 @@ public class calendarPage extends AppCompatActivity {
                 if(dataSet.isEmpty()){
                     Toast.makeText(getApplicationContext(), "No Task On the Date!", Toast.LENGTH_SHORT).show();
                 }
+                //sort datalist to make sure the tasks is ordered by time.
                 Collections.sort(dataSet, new Comparator() {
                     @Override
                     public int compare(Object o1, Object o2) {
@@ -105,11 +108,20 @@ public class calendarPage extends AppCompatActivity {
             }
         });
 
+        image_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent dashboard = new Intent(calendarPage.this, dashboardActivity.class);
+                startActivity(dashboard);
+                finish();
+            }
+        });
+
     }
 
     @Override
-    protected void onResume(){
-        super.onResume();
+    protected void onStart(){
+        super.onStart();
     }
 
 

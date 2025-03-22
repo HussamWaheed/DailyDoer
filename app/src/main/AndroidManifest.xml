@@ -25,7 +25,10 @@
             android:exported="false"/>
         <activity android:name=".addActivity"
             android:exported="false"/>
-
+        <activity android:name=".dashboardActivity"
+            android:exported="false"/>
+        <activity android:name=".listActivity"
+            android:exported="false"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

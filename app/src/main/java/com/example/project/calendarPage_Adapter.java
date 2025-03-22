@@ -46,9 +46,11 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
         holder.checkBox.setText("Done");
         holder.card.setVisibility(View.VISIBLE);
         holder.checkBox.setOnCheckedChangeListener(null);
+        //set default status
+        holder.checkBox.setChecked(false);
 
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {  // Ensure action happens only when checked
+            if (isChecked){
                 dbhelper database = new dbhelper(context.getApplicationContext());
                 Cursor rowsDeleted = database.deleteData(data.getTitle(), data.getDate());
                 if (rowsDeleted.getCount()>0) {

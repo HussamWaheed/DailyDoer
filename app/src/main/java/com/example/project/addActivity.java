@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -22,6 +23,7 @@ public class addActivity extends AppCompatActivity {
     TimePicker time;
     Switch sw_btn;
     Button sub_btn, re_btn;
+    ImageButton image_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class addActivity extends AppCompatActivity {
         sw_btn = findViewById(R.id.swbtn);
         sub_btn = findViewById(R.id.submit);
         re_btn = findViewById(R.id.reset);
+        image_btn = findViewById(R.id.image_btn);
+        Intent intent = getIntent();
 
         dbhelper database = new dbhelper(getApplicationContext());
         database.getReadableDatabase();
@@ -61,13 +65,40 @@ public class addActivity extends AppCompatActivity {
                     }else {
                         Toast.makeText(getApplicationContext(),"Task is Added!", Toast.LENGTH_LONG).show();
                     }
-                    Intent calendarView = new Intent(addActivity.this, calendarPage.class);
-                    startActivity(calendarView);
+
+                    if (intent.getStringExtra("add").equals("calendar")){
+                        Intent calendarView = new Intent(addActivity.this, calendarPage.class);
+                        startActivity(calendarView);
+                    }else if (intent.getStringExtra("add").equals("dash")){
+                        Intent dashBoardView = new Intent(addActivity.this, listActivity.class);
+                        startActivity(dashBoardView);
+                    }
+
                     finish();
                 }
             }
         });
 
+        re_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                title.setText("");
+                description.setText("");
+            }
+        });
 
+        image_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (intent.getStringExtra("add").equals("calendar")){
+                    Intent calendarView = new Intent(addActivity.this, calendarPage.class);
+                    startActivity(calendarView);
+                }else if (intent.getStringExtra("add").equals("dash")){
+                    Intent dashBoardView = new Intent(addActivity.this, dashboardActivity.class);
+                    startActivity(dashBoardView);
+                }
+                finish();
+            }
+        });
     }
 }
