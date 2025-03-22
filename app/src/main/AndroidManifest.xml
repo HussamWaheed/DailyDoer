@@ -21,7 +21,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".calendarPage" />
-    </application>
+        <activity android:name=".calendarPage"
+            android:exported="false"/>
+        <activity android:name=".addActivity"
+            android:exported="false"/>
 
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

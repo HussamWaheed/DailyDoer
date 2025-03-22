@@ -1,6 +1,8 @@
 package com.example.project;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +10,10 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -17,16 +21,13 @@ import java.util.ArrayList;
 public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adapter.MyViewHolder> {
 
     ArrayList<dataSets> dateList;
+    Context context;
 
-    ArrayList<dataSets> dataSet;
-
-    public calendarPage_Adapter(ArrayList<dataSets> dateList){
+    public calendarPage_Adapter(ArrayList<dataSets> dateList, Context context){
         this.dateList = dateList;
+        this.context = context;
     }
 
-    public void setDataSet(ArrayList<dataSets> dataSet){
-        this.dataSet = dataSet;
-    }
 
     @NonNull
     @Override
@@ -40,22 +41,24 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
         dataSets data= dateList.get(position);
         holder.title.setText(data.getTitle());
         holder.date.setText(data.getDate());
-        holder.duration.setText(data.getTime());
+        holder.time.setText(data.getTime());
         holder.description.setText(data.getDescription());
         holder.checkBox.setText("Done");
-        holder.linearLayout.setVisibility(View.VISIBLE);
+        holder.card.setVisibility(View.VISIBLE);
         holder.checkBox.setOnCheckedChangeListener(null);
 
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (holder.checkBox.isChecked()){
-                if (dataSet.contains(dateList.get(position))){
-                    dataSet.remove(dateList.get(position));
+            if (isChecked) {  // Ensure action happens only when checked
+                dbhelper database = new dbhelper(context.getApplicationContext());
+                Cursor rowsDeleted = database.deleteData(data.getTitle(), data.getDate());
+                if (rowsDeleted.getCount()>0) {
+                    holder.card.setVisibility(View.GONE);
+                    dateList.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, dateList.size());
+                } else {
+                    Toast.makeText(context, "Failed to delete item", Toast.LENGTH_SHORT).show();
                 }
-                dateList.remove(position);
-                holder.linearLayout.setVisibility(View.GONE);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, dateList.size());
-
             }
         });
 
@@ -68,16 +71,15 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView title, date, duration, description;
-        LinearLayout linearLayout;
-
+        TextView title, date, time, description;
+        CardView card;
         CheckBox checkBox;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            linearLayout = itemView.findViewById(R.id.linearlayout);
+            card = itemView.findViewById(R.id.card);
             title =itemView.findViewById(R.id.title);
             date = itemView.findViewById(R.id.date);
-            duration = itemView.findViewById(R.id.duration);
+            time = itemView.findViewById(R.id.time);
             description = itemView.findViewById(R.id.description);
             checkBox = itemView.findViewById(R.id.checkBox);
         }
