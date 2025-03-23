@@ -19,6 +19,8 @@ import java.util.Calendar;
 
 public class addActivity extends AppCompatActivity {
     EditText title, description;
+
+    TextView topBar;
     DatePicker date;
     TimePicker time;
     Switch sw_btn;
@@ -37,7 +39,15 @@ public class addActivity extends AppCompatActivity {
         sub_btn = findViewById(R.id.submit);
         re_btn = findViewById(R.id.reset);
         image_btn = findViewById(R.id.image_btn);
+        topBar = findViewById(R.id.title);
         Intent intent = getIntent();
+        if (intent.getBooleanExtra("update",false)){
+            topBar.setText("Update the Task");
+            sub_btn.setText("Update");
+            title.setText(intent.getStringExtra("title"));
+            description.setText(intent.getStringExtra("description"));
+            title.setEnabled(false);
+        }
 
         dbhelper database = new dbhelper(getApplicationContext());
         database.getReadableDatabase();
@@ -59,12 +69,22 @@ public class addActivity extends AppCompatActivity {
                     if (time.isEnabled()){
                         time1 = String.format("%02d:%02d", time.getHour(), time.getMinute());
                     }
-                    long row = database.addItems(title1, desc, date1, time1);
-                    if(row<0){
-                        Toast.makeText(getApplicationContext(),"Task is Not Added!", Toast.LENGTH_LONG).show();
-                    }else {
-                        Toast.makeText(getApplicationContext(),"Task is Added!", Toast.LENGTH_LONG).show();
+                    if (intent.getBooleanExtra("update",false)){
+                        long update = database.editItem(title1, desc, date1, time1);
+                        if(update<0){
+                            Toast.makeText(getApplicationContext(),"Task is Not Updated!", Toast.LENGTH_LONG).show();
+                        }else {
+                            Toast.makeText(getApplicationContext(),"Task is Updated!", Toast.LENGTH_LONG).show();
+                        }
+                    }else{
+                        long row = database.addItems(title1, desc, date1, time1);
+                        if(row<0){
+                            Toast.makeText(getApplicationContext(),"Task is Not Added!", Toast.LENGTH_LONG).show();
+                        }else {
+                            Toast.makeText(getApplicationContext(),"Task is Added!", Toast.LENGTH_LONG).show();
+                        }
                     }
+
 
                     if (intent.getStringExtra("add").equals("calendar")){
                         Intent calendarView = new Intent(addActivity.this, calendarPage.class);

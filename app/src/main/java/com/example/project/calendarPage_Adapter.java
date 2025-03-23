@@ -3,6 +3,7 @@ package com.example.project;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,37 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
         holder.checkBox.setChecked(false);
 
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            dbhelper database = new dbhelper(context.getApplicationContext());
             if (isChecked){
+                Cursor rowsDeleted = database.deleteData(data.getTitle(), data.getDate());
+                if (rowsDeleted.getCount()>0) {
+                    dateList.remove(position);
+                    holder.card.setVisibility(View.GONE);
+                    notifyItemRemoved(position);
+                    holder.card.setVisibility(View.GONE);
+                } else {
+                    Toast.makeText(context, "Failed to delete item", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        holder.card.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent update = new Intent(context, addActivity.class);
+                update.putExtra("update",true);
+                update.putExtra("title", data.getTitle());
+                update.putExtra("description",data.getDescription());
+                update.putExtra("date", data.getDate());
+                update.putExtra("time", data.getTime());
+                context.startActivity(update);
+                return true;
+            }
+        });
+
+        holder.card.setOnDragListener(new View.OnDragListener() {
+            @Override
+            public boolean onDrag(View v, DragEvent event) {
                 dbhelper database = new dbhelper(context.getApplicationContext());
                 Cursor rowsDeleted = database.deleteData(data.getTitle(), data.getDate());
                 if (rowsDeleted.getCount()>0) {
@@ -61,6 +92,7 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
                 } else {
                     Toast.makeText(context, "Failed to delete item", Toast.LENGTH_SHORT).show();
                 }
+                return true;
             }
         });
 
@@ -71,7 +103,6 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
     public int getItemCount() {
         return dateList.size();
     }
-
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView title, date, time, description;
         CardView card;

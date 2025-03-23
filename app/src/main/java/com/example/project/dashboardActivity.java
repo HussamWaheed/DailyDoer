@@ -26,6 +26,7 @@ public class dashboardActivity extends AppCompatActivity {
                 Intent addPage = new Intent(dashboardActivity.this, addActivity.class);
                 addPage.putExtra("add", "dash");
                 startActivity(addPage);
+                finish();
             }
         });
 
@@ -34,6 +35,7 @@ public class dashboardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent calendarPage = new Intent(dashboardActivity.this, calendarPage.class);
                 startActivity(calendarPage);
+                finish();
             }
         });
 
@@ -42,6 +44,16 @@ public class dashboardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent listPage = new Intent(dashboardActivity.this, listActivity.class);
                 startActivity(listPage);
+                finish();
+            }
+        });
+
+        complete_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent listPage = new Intent(dashboardActivity.this, completeActivity.class);
+                startActivity(listPage);
+                finish();
             }
         });
 

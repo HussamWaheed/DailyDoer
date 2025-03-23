@@ -19,7 +19,7 @@
         app:srcCompat="?attr/homeAsUpIndicator" />
 
     <TextView
-        android:id="@+id/tile"
+        android:id="@+id/title"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:background="@color/custom3"

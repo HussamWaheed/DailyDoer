@@ -5,11 +5,14 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +21,9 @@ import java.util.Comparator;
 public class listActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ImageButton image_btn;
+
+    FloatingActionButton fab_add;
+
     ArrayList<dataSets> dataSet = new ArrayList<>();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +31,7 @@ public class listActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView1);
         image_btn = findViewById(R.id.image_btn);
+        fab_add = findViewById(R.id.fab_add);
         dbhelper database = new dbhelper(getApplicationContext());
         database.getReadableDatabase();
 
@@ -44,7 +51,7 @@ public class listActivity extends AppCompatActivity {
             }
         }
         if(dataSet.isEmpty()){
-            Toast.makeText(getApplicationContext(), "No Task On the Date!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "No Tasks!", Toast.LENGTH_SHORT).show();
         }
         //sort datalist to make sure the tasks is ordered by time.
         Collections.sort(dataSet, new Comparator() {
@@ -72,5 +79,16 @@ public class listActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        fab_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addPage = new Intent(listActivity.this, addActivity.class);
+                addPage.putExtra("add", "dash");
+                startActivity(addPage);
+                finish();
+            }
+        });
+
     }
 }
