@@ -58,10 +58,10 @@ public class calendarPage extends AppCompatActivity {
         dbhelper database = new dbhelper(getApplicationContext());
         database.getReadableDatabase();
 
-
+        //set linearlayout manager
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-
+        //when floating button is clicked, jump to add_task page
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,13 +71,15 @@ public class calendarPage extends AppCompatActivity {
             }
         });
 
-
+        //when pick date on calendar view, only get tasks on the date.
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int year, int month, int day) {
                 ArrayList<dataSets> dataSet = new ArrayList<>();
+                //format the date string
                 String date = String.format("%02d-%02d-%d",month+1, day, year);
-                Cursor cursor = database.displayData();
+                //output all the uncompleted tasks
+                Cursor cursor = database.displayData("false");
                 if (cursor.getCount() == 0) {
                 } else {
                     while (cursor.moveToNext()) {
@@ -93,7 +95,7 @@ public class calendarPage extends AppCompatActivity {
                 if(dataSet.isEmpty()){
                     Toast.makeText(getApplicationContext(), "No Task On the Date!", Toast.LENGTH_SHORT).show();
                 }
-                //sort datalist to make sure the tasks is ordered by time.
+                //sort datalist ascending to make sure the tasks is ordered by time.
                 Collections.sort(dataSet, new Comparator() {
                     @Override
                     public int compare(Object o1, Object o2) {
@@ -107,7 +109,7 @@ public class calendarPage extends AppCompatActivity {
                 recyclerView.setAdapter(myAdapter);
             }
         });
-
+        //back to the last page
         image_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,7 +127,7 @@ public class calendarPage extends AppCompatActivity {
         dbhelper database = new dbhelper(getApplicationContext());
         database.getReadableDatabase();
         ArrayList<dataSets> dataSet = new ArrayList<>();
-        Cursor cursor = database.displayData();
+        Cursor cursor = database.displayData("false");
         long date = calendarView.getDate();
         Calendar calendar = Calendar.getInstance();
         int month = calendar.get(calendar.MONTH);

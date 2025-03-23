@@ -24,9 +24,10 @@ ImageView image;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         image = findViewById(R.id.image);
+        //insert a gif file as the logo, and Glide is external library
         Glide.with(this).load(R.drawable.logo_gif).into(image);
 
-        //used to delay the action
+        //used to delay the action that let welcomepage holds 3 sec
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

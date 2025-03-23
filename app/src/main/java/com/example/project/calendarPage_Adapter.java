@@ -47,34 +47,33 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
         holder.checkBox.setText("Done");
         holder.card.setVisibility(View.VISIBLE);
         holder.checkBox.setOnCheckedChangeListener(null);
-        //set default status
-        holder.checkBox.setChecked(false);
 
-
+        //if check box is checked, change the status of the task and remove it from the screen
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             dbhelper database = new dbhelper(context.getApplicationContext());
-            if (isChecked){
-                    Cursor rowsDeleted = database.deleteData(data.getTitle(), data.getDate());
-                    if (rowsDeleted.getCount()>0) {
-                        dateList.remove(position);
-                        holder.card.setVisibility(View.GONE);
-                        notifyItemRemoved(position);
-                    } else {
-                        Toast.makeText(context, "Failed to delete item", Toast.LENGTH_SHORT).show();
-                    }
-            }
-        });
+                if (isChecked){
+                    database.editItem(data.getTitle(), data.getDescription(), data.getDate(), data.getTime(), "true");
+                    dateList.remove(position);
+                    holder.card.setVisibility(View.GONE);
+                    notifyItemRemoved(position);
+                }
 
+
+        });
+        //when long click the card view, jump to update task page and edit task
         holder.card.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 Intent update = new Intent(context, addActivity.class);
                 update.putExtra("update",true);
                 if (context.getClass().equals(calendarPage.class)){
+                    //long click from calendar page
                     update.putExtra("page","calendar");
                 }else{
+                    //long press from list page
                     update.putExtra("page","dash");
                 }
+                //put everything to the update page
                 update.putExtra("title", data.getTitle());
                 update.putExtra("description",data.getDescription());
                 update.putExtra("date", data.getDate());

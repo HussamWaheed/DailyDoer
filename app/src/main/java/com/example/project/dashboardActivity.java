@@ -20,6 +20,7 @@ public class dashboardActivity extends AppCompatActivity {
         calendar_btn = findViewById(R.id.calendar_btn);
         all_btn = findViewById(R.id.all_btn);
 
+        //jump to add task page
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -29,7 +30,7 @@ public class dashboardActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        //jump to calendar page
         calendar_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,10 +40,23 @@ public class dashboardActivity extends AppCompatActivity {
             }
         });
 
+        //jump to list page
         all_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent listPage = new Intent(dashboardActivity.this, listActivity.class);
+                listPage.putExtra("page", "list");
+                startActivity(listPage);
+                finish();
+            }
+        });
+
+        //jump to complete task page
+        complete_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent listPage = new Intent(dashboardActivity.this, listActivity.class);
+                listPage.putExtra("page", "complete");
                 startActivity(listPage);
                 finish();
             }
