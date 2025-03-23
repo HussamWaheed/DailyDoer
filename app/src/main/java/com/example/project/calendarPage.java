@@ -76,7 +76,7 @@ public class calendarPage extends AppCompatActivity {
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int year, int month, int day) {
                 ArrayList<dataSets> dataSet = new ArrayList<>();
-                String date = String.format("%02d-%02d-%d", month + 1, day, year);
+                String date = String.format("%02d-%02d-%d",month+1, day, year);
                 Cursor cursor = database.displayData();
                 if (cursor.getCount() == 0) {
                 } else {
@@ -120,8 +120,33 @@ public class calendarPage extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart(){
-        super.onStart();
+    protected void onResume(){
+        super.onResume();
+        dbhelper database = new dbhelper(getApplicationContext());
+        database.getReadableDatabase();
+        ArrayList<dataSets> dataSet = new ArrayList<>();
+        Cursor cursor = database.displayData();
+        long date = calendarView.getDate();
+        Calendar calendar = Calendar.getInstance();
+        int month = calendar.get(calendar.MONTH);
+        int day = calendar.get(calendar.DAY_OF_MONTH);
+        int year = calendar.get(calendar.YEAR);
+        String date1 = String.format("%02d-%02d-%d",month+1, day, year);
+        if (cursor.getCount() == 0) {
+        } else {
+            while (cursor.moveToNext()) {
+                String ti = cursor.getString(1);
+                String de = cursor.getString(2);
+                String da = cursor.getString(3);
+                String tm = cursor.getString(4);
+                if (da.equals(date1)) {
+                    dataSet.add(new dataSets(ti, de, da, tm));
+                }
+            }
+        }
+        cursor.close();
+        calendarPage_Adapter myAdapter = new calendarPage_Adapter(dataSet, calendarPage.this);
+        recyclerView.setAdapter(myAdapter);
     }
 
 

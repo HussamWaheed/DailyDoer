@@ -79,22 +79,6 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
             }
         });
 
-        holder.card.setOnDragListener(new View.OnDragListener() {
-            @Override
-            public boolean onDrag(View v, DragEvent event) {
-                dbhelper database = new dbhelper(context.getApplicationContext());
-                Cursor rowsDeleted = database.deleteData(data.getTitle(), data.getDate());
-                if (rowsDeleted.getCount()>0) {
-                    holder.card.setVisibility(View.GONE);
-                    dateList.remove(position);
-                    notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, dateList.size());
-                } else {
-                    Toast.makeText(context, "Failed to delete item", Toast.LENGTH_SHORT).show();
-                }
-                return true;
-            }
-        });
 
     }
 
