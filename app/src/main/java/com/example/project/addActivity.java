@@ -86,10 +86,10 @@ public class addActivity extends AppCompatActivity {
                     }
 
 
-                    if (intent.getStringExtra("add").equals("calendar")){
+                    if (intent.getStringExtra("page").equals("calendar")){
                         Intent calendarView = new Intent(addActivity.this, calendarPage.class);
                         startActivity(calendarView);
-                    }else if (intent.getStringExtra("add").equals("dash")){
+                    }else{
                         Intent dashBoardView = new Intent(addActivity.this, listActivity.class);
                         startActivity(dashBoardView);
                     }
@@ -110,12 +110,15 @@ public class addActivity extends AppCompatActivity {
         image_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (intent.getStringExtra("add").equals("calendar")){
+                if (intent.getStringExtra("page").equals("calendar")){
                     Intent calendarView = new Intent(addActivity.this, calendarPage.class);
                     startActivity(calendarView);
-                }else if (intent.getStringExtra("add").equals("dash")){
+                }else if (intent.getStringExtra("page").equals("dash")){
                     Intent dashBoardView = new Intent(addActivity.this, dashboardActivity.class);
                     startActivity(dashBoardView);
+                }else{
+                    Intent listView = new Intent(addActivity.this, listActivity.class);
+                    startActivity(listView);
                 }
                 finish();
             }

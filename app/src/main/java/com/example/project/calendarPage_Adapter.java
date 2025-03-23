@@ -50,18 +50,18 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
         //set default status
         holder.checkBox.setChecked(false);
 
+
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             dbhelper database = new dbhelper(context.getApplicationContext());
             if (isChecked){
-                Cursor rowsDeleted = database.deleteData(data.getTitle(), data.getDate());
-                if (rowsDeleted.getCount()>0) {
-                    dateList.remove(position);
-                    holder.card.setVisibility(View.GONE);
-                    notifyItemRemoved(position);
-                    holder.card.setVisibility(View.GONE);
-                } else {
-                    Toast.makeText(context, "Failed to delete item", Toast.LENGTH_SHORT).show();
-                }
+                    Cursor rowsDeleted = database.deleteData(data.getTitle(), data.getDate());
+                    if (rowsDeleted.getCount()>0) {
+                        dateList.remove(position);
+                        holder.card.setVisibility(View.GONE);
+                        notifyItemRemoved(position);
+                    } else {
+                        Toast.makeText(context, "Failed to delete item", Toast.LENGTH_SHORT).show();
+                    }
             }
         });
 
@@ -70,6 +70,11 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
             public boolean onLongClick(View v) {
                 Intent update = new Intent(context, addActivity.class);
                 update.putExtra("update",true);
+                if (context.getClass().equals(calendarPage.class)){
+                    update.putExtra("page","calendar");
+                }else{
+                    update.putExtra("page","dash");
+                }
                 update.putExtra("title", data.getTitle());
                 update.putExtra("description",data.getDescription());
                 update.putExtra("date", data.getDate());

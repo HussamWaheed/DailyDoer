@@ -84,7 +84,7 @@ public class listActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent addPage = new Intent(listActivity.this, addActivity.class);
-                addPage.putExtra("add", "dash");
+                addPage.putExtra("page", "list");
                 startActivity(addPage);
                 finish();
             }

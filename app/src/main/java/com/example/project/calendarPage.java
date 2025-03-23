@@ -66,7 +66,7 @@ public class calendarPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent addPage = new Intent(calendarPage.this, addActivity.class);
-                addPage.putExtra("add", "calendar");
+                addPage.putExtra("page", "calendar");
                 startActivity(addPage);
             }
         });

@@ -19,20 +19,15 @@ public class dbhelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String query1 = "CREATE TABLE schedule(_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT, date TEXT NOT NULL, time TEXT)";
-        String query2 = "CREATE TABLE completeTasks(_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT, date TEXT NOT NULL, time TEXT)";
         sqLiteDatabase.execSQL(query1);
-        sqLiteDatabase.execSQL(query2);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         String query1= "DROP TABLE IF EXISTS schedule";
         sqLiteDatabase.execSQL(query1);
-        String query2= "DROP TABLE IF EXISTS completeTasks";
-        sqLiteDatabase.execSQL(query2);
         onCreate(sqLiteDatabase);
     }
-
 
     public long addItems(String newtitle, String newdescription, String newdate, String newtime){
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
@@ -44,24 +39,9 @@ public class dbhelper extends SQLiteOpenHelper {
         return sqLiteDatabase.insert("schedule", null, contentValues);
     }
 
-    public long complete_addItems(String newtitle, String newdescription, String newdate, String newtime){
-        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("title", newtitle);
-        contentValues.put("description", newdescription);
-        contentValues.put("date",newdate);
-        contentValues.put("time", newtime);
-        return sqLiteDatabase.insert("completeTasks", null, contentValues);
-    }
-
     public Cursor displayData(){
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM schedule",null);
-        return cursor;
-    }
-    public Cursor complete_displayData(){
-        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM completeTasks",null);
         return cursor;
     }
 
@@ -70,15 +50,6 @@ public class dbhelper extends SQLiteOpenHelper {
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM schedule WHERE title=? AND date=?", new String[]{title, date});
         if(cursor.getCount() > 0){
             sqLiteDatabase.delete("schedule", "title=? AND date=?", new String[]{title, date});
-        }
-        return  cursor;
-    }
-
-    public Cursor complete_deleteData(String title, String date){
-        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM completeTasks WHERE title=? AND date=?", new String[]{title, date});
-        if(cursor.getCount() > 0){
-            sqLiteDatabase.delete("completeTasks", "title=? AND date=?", new String[]{title, date});
         }
         return  cursor;
     }
@@ -92,12 +63,4 @@ public class dbhelper extends SQLiteOpenHelper {
         return sqLiteDatabase.update("schedule", contentValues, "title=?", new String[]{title});
     }
 
-    public long complete_editItem(String title, String newDescription, String date, String time){
-        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("description", newDescription);
-        contentValues.put ("date",date);
-        contentValues.put ("time",time);
-        return sqLiteDatabase.update("completeTasks", contentValues, "title=?", new String[]{title});
-    }
 }
