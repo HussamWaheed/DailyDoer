@@ -1,5 +1,8 @@
 package com.example.project;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +18,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class addActivity extends AppCompatActivity {
     EditText title, description;
@@ -31,6 +37,15 @@ public class addActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_layout);
+        //request SCHEDULE_EXACT_ALARM permission
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            if (!alarmManager.canScheduleExactAlarms()) {
+                Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                startActivity(intent); //will take user to the allow exact alarm setting
+            }
+        }
+
         title = findViewById(R.id.ed_title);
         description = findViewById(R.id.ed_description);
         date = findViewById(R.id.date_pick);
@@ -90,6 +105,7 @@ public class addActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),"Task is Not Added!", Toast.LENGTH_LONG).show();
                         }else {
                             Toast.makeText(getApplicationContext(),"Task is Added!", Toast.LENGTH_LONG).show();
+                            scheduleTaskAlarm(addActivity.this, title1, date1, time1); //set alarm after task is saved
                         }
                     }
 
@@ -133,4 +149,43 @@ public class addActivity extends AppCompatActivity {
             }
         });
     }
+    //schedule an alarm notification for a specific task based on its date and time
+    private void scheduleTaskAlarm(Context context, String title, String date, String time) {
+        if (time.equals("All Day")) {//skip if marked as all day
+            return;
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm", Locale.getDefault());
+        try {
+            //parse date time string into a Date object
+            Date dateTime = sdf.parse(date + " " + time);
+            if (dateTime != null) {
+                long triggerTime = dateTime.getTime();
+                long now = System.currentTimeMillis();//current system time
+
+                //create an intent that will be broadcast when the alarm goes off
+                Intent intent = new Intent(context, AlarmReceiver.class);
+                intent.putExtra("title", title);
+                intent.putExtra("time", time);
+
+
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                        context,
+                        (int) System.currentTimeMillis(), // unique ID per task to avoid overwrite
+                        intent,
+                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+                );
+
+                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+                //schedule an alarm that goes of even if device is idle
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
