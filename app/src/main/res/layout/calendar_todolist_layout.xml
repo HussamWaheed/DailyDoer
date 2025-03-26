@@ -4,9 +4,12 @@
     android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="5dp">
+    android:layout_margin="10dp"
+    app:cardCornerRadius="25dp"
+    app:cardElevation="5dp"
+    android:orientation="vertical"
+    android:divider="@color/black"
+    android:dividerPadding="1dp"
 
     <LinearLayout
         android:layout_width="match_parent"

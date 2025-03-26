@@ -9,6 +9,9 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,6 +48,7 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         dataSets data = dateList.get(position);
+        Log.d("ImportanceCheck", "Task: " + data.getTitle() + ", Importance: " + data.getImportance());
         holder.title.setText(data.getTitle());
         holder.date.setText(data.getDate());
         holder.time.setText(data.getTime());
@@ -53,17 +57,70 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
         holder.card.setVisibility(View.VISIBLE);
         holder.checkBox.setOnCheckedChangeListener(null);
 
-        // Delete button click handler
-        holder.deleteBtn.setOnClickListener(v -> {
-            if (deleteListener != null) {
-                int currentPosition = holder.getAdapterPosition();
-                if (currentPosition != RecyclerView.NO_POSITION) {
-                    deleteListener.onDeleteTask(data.getId()); // Pass taskId for deletion
-                    dateList.remove(currentPosition);
-                    notifyItemRemoved(currentPosition);
-                }
-            }
-        });
+// Set color based on the importance of the task
+switch (data.getImportance()) {
+    case "High":
+        holder.card.setCardBackgroundColor(context.getResources().getColor(R.color.high_importance)); // Red color for high importance
+        break;
+    case "Medium":
+        holder.card.setCardBackgroundColor(context.getResources().getColor(R.color.medium_importance)); // Yellow color for medium importance
+        break;
+    case "Low":
+        holder.card.setCardBackgroundColor(context.getResources().getColor(R.color.no_importance)); // Default color for no/low importance
+        break;
+}
+
+// If checkbox is checked, change the status of the task and remove it from the screen
+holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+    dbhelper database = new dbhelper(context.getApplicationContext());
+    if (isChecked) {
+        database.editItem(data.getTitle(), data.getDescription(), data.getDate(), data.getTime(), "true", data.getImportance());
+        int position = holder.getAdapterPosition();
+        if (position != RecyclerView.NO_POSITION) {
+            dateList.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, dateList.size());
+        }
+    }
+});
+
+// Delete button click handler
+holder.deleteBtn.setOnClickListener(v -> {
+    if (deleteListener != null) {
+        int currentPosition = holder.getAdapterPosition();
+        if (currentPosition != RecyclerView.NO_POSITION) {
+            deleteListener.onDeleteTask(data.getId()); // Pass taskId for deletion
+            dateList.remove(currentPosition);
+            notifyItemRemoved(currentPosition);
+            notifyItemRangeChanged(currentPosition, dateList.size());
+        }
+    }
+});
+
+// When long-clicking the card view, jump to update task page and edit task
+holder.card.setOnLongClickListener(v -> {
+    Intent update = new Intent(context, addActivity.class);
+    update.putExtra("update", true);
+    
+    if (context.getClass().equals(calendarPage.class)) {
+        // Long click from calendar page
+        update.putExtra("page", "calendar");
+    } else {
+        // Long press from list page
+        update.putExtra("page", "dash");
+    }
+    
+    // Put everything to the update page
+    update.putExtra("title", data.getTitle());
+    update.putExtra("description", data.getDescription());
+    update.putExtra("date", data.getDate());
+    update.putExtra("time", data.getTime());
+    update.putExtra("importance", data.getImportance());
+    
+    context.startActivity(update);
+    return true;
+});
+
 
         // Checkbox change listener (Mark task as complete)
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {

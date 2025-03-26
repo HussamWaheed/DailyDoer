@@ -1,7 +1,10 @@
 package com.example.project;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -15,7 +18,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+
 import com.bumptech.glide.Glide;
+
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 ImageView image;
@@ -35,9 +41,16 @@ ImageView image;
                 startActivity(intent);
             }
         },3000);
-
-
-
+        //create notification channel (Android 8+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    "TASK_REMINDER_CHANNEL",
+                    "Task Reminders",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+            channel.setDescription("Notifies you when a task is due");
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
     }
-
 }

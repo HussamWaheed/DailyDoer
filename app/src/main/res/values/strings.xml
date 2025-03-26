@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">DailyDoer</string>
-    <string name="delete_task">Delete task</string>
+<string name="delete_task">Delete task</string>
+
+<string-array name="importance_array">
+    <item>Low</item>
+    <item>Medium</item>
+    <item>High</item>
+</string-array>
+
 </resources>
