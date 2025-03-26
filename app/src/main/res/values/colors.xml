@@ -6,4 +6,8 @@
     <color name="custom1">#cdffd8</color>
     <color name="custom2">#94b9ff</color>
     <color name="custom3">#38b6ff</color>
+    <color name="high_importance">#FF6347</color> <!-- Tomato Red for high importance -->
+    <color name="medium_importance">#FFD700</color> <!-- Gold Yellow for medium importance -->
+    <color name="no_importance">#FFFFFF</color> <!-- White for no importance -->
+
 </resources>

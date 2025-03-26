@@ -12,13 +12,13 @@ public class dbhelper extends SQLiteOpenHelper {
 
     private static dbhelper instance;
     public dbhelper(@Nullable Context context) {
-        super(context, "dailyTask", null, 1);
+        super(context, "dailyTask", null, 4);
     }
 
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String query1 = "CREATE TABLE schedule(_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT, date TEXT NOT NULL, time TEXT, status TEXT NOT NULL)";
+        String query1 = "CREATE TABLE schedule(_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT, date TEXT NOT NULL, time TEXT, status TEXT NOT NULL, importance TEXT DEFAULT 'High')";
         sqLiteDatabase.execSQL(query1);
     }
 
@@ -29,7 +29,7 @@ public class dbhelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public long addItems(String newtitle, String newdescription, String newdate, String newtime,String status){
+    public long addItems(String newtitle, String newdescription, String newdate, String newtime,String status, String importance){
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("title", newtitle);
@@ -37,6 +37,7 @@ public class dbhelper extends SQLiteOpenHelper {
         contentValues.put("date",newdate);
         contentValues.put("time", newtime);
         contentValues.put("status", status);
+        contentValues.put("importance", importance);
         return sqLiteDatabase.insert("schedule", null, contentValues);
     }
 
@@ -60,13 +61,15 @@ public class dbhelper extends SQLiteOpenHelper {
         return  cursor;
     }
 
-    public long editItem(String title, String newDescription, String date, String time, String status){
+    public long editItem(String title, String newDescription, String date, String time, String status, String importance){
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("description", newDescription);
         contentValues.put ("date",date);
         contentValues.put ("time",time);
         contentValues.put ("status",status);
+        contentValues.put ("importance",importance);
+
         return sqLiteDatabase.update("schedule", contentValues, "title=?", new String[]{title});
     }
 
