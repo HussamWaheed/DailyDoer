@@ -44,7 +44,6 @@ ImageView image;
                 startActivity(intent);
             }
         },3000);
-
         //create notification channel (Android 8+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
@@ -56,6 +55,5 @@ ImageView image;
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
-
     }
 }
