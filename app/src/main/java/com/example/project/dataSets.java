@@ -1,14 +1,14 @@
 package com.example.project;
 
 public class dataSets {
-    public int id;
-    public String title;
-    public String date;
-    public String time;
-    public String description;
-    public String importance;
+    private int id;               // ID for tasks retrieved from the database
+    private String title;         // Task title
+    private String date;          // Task due date
+    private String time;          // Task time
+    private String description;   // Task description
+    private String importance;    // Task importance level
 
-    // Constructor with ID (for tasks retrieved from the database)
+    // Constructor for tasks retrieved from the database (includes ID)
     public dataSets(int id, String title, String description, String date, String time, String importance) {
         this.id = id;
         this.title = title;
@@ -18,7 +18,7 @@ public class dataSets {
         this.importance = importance;
     }
 
-    // Constructor without ID (for new tasks)
+    // Constructor for new tasks (does not include ID)
     public dataSets(String title, String description, String date, String time, String importance) {
         this.title = title;
         this.description = description;
@@ -27,27 +27,32 @@ public class dataSets {
         this.importance = importance;
     }
 
-    // Getters
+    // Getter for ID (used when retrieving tasks from the database)
     public int getId() {
         return id;
     }
 
+    // Getter for Title
     public String getTitle() {
         return title;
     }
 
+    // Getter for Description
     public String getDescription() {
         return description;
     }
 
+    // Getter for Date
     public String getDate() {
         return date;
     }
 
+    // Getter for Time
     public String getTime() {
         return time;
     }
 
+    // Getter for Importance
     public String getImportance() {
         return importance;
     }

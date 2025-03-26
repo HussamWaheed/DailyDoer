@@ -59,15 +59,16 @@ public class listActivity extends AppCompatActivity implements calendarPage_Adap
             // No tasks to display
         } else {
             while (cursor.moveToNext()) {
-                int id = cursor.getInt(0);
+                int id = cursor.getInt(0);  // 'id' as int
                 String ti = cursor.getString(1);
                 String de = cursor.getString(2);
                 String da = cursor.getString(3);
                 String tm = cursor.getString(4);
                 String status = cursor.getString(5);
                 String importance = cursor.getString(6);
+
+                // Pass 'id' as int to the dataSets constructor
                 dataSet.add(new dataSets(id, ti, de, da, tm, importance));
-                
             }
         }
 
@@ -156,7 +157,7 @@ public class listActivity extends AppCompatActivity implements calendarPage_Adap
                 String de = cursor.getString(2);
                 String da = cursor.getString(3);
                 String tm = cursor.getString(4);
-                dataSet.add(new dataSets(id, ti, de, da, tm));
+                dataSet.add(new dataSets(String.valueOf(id), ti, de, da, tm));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -174,3 +175,4 @@ public class listActivity extends AppCompatActivity implements calendarPage_Adap
         });
     }
 }
+
