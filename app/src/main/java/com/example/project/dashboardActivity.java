@@ -8,7 +8,8 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class dashboardActivity extends AppCompatActivity {
-    Button add_btn, complete_btn, calendar_btn, all_btn, focus_btn;
+    Button add_btn, complete_btn, calendar_btn, all_btn;
+    Button focus_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
