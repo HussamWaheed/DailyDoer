@@ -59,5 +59,20 @@
         android:backgroundTint="@color/custom3"/>
 </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/focus_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Focus Timer"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/custom3"/>
+    </LinearLayout>
+
 
 </LinearLayout>
