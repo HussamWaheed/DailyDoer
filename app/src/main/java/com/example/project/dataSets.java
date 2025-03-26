@@ -1,29 +1,59 @@
 package com.example.project;
 
-import android.view.View;
-import android.widget.CheckBox;
-
-import java.sql.Time;
-import java.util.Date;
-
 public class dataSets {
+    private int id;
+    private String title;
+    private String description;
+    private String date;
+    private String time;
 
-    public String title;
-    public String date;
-    public String time;
-    public String description;
-
-
-    public dataSets(String title, String description, String date, String time){
+    // Constructor with ID (for tasks retrieved from the database)
+    public dataSets(int id, String title, String description, String date, String time) {
+        this.id = id;
         this.title = title;
+        this.description = description;
         this.date = date;
         this.time = time;
-        this.description = description;
     }
 
-    public String getTitle(){return title;}
-    public String getDate(){return date;}
-    public String getTime(){return time;}
-    public String getDescription(){return description;}
+    // Constructor without ID (for tasks to be added to the database)
+    public dataSets(String title, String description, String date, String time) {
+        this.title = title;
+        this.description = description;
+        this.date = date;
+        this.time = time;
+    }
 
+    // Getters
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    // Optional: toString() method for easier debugging and logging
+    @Override
+    public String toString() {
+        return "dataSets{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                '}';
+    }
 }
