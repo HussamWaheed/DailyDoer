@@ -48,7 +48,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         //create notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "TASK_REMINDER_CHANNEL")
-                .setSmallIcon(R.drawable.logo)
+                .setSmallIcon(R.drawable.dd_logo)
                 .setContentTitle(title)
                 .setContentText("Today, " + time)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)//set priority
