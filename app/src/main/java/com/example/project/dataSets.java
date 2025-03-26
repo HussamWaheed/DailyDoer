@@ -13,17 +13,22 @@ public class dataSets {
     public String time;
     public String description;
 
+    public String importance;
 
-    public dataSets(String title, String description, String date, String time){
+
+    public dataSets(String title, String description, String date, String time, String importance){
         this.title = title;
         this.date = date;
         this.time = time;
         this.description = description;
+        this.importance = importance;
     }
 
     public String getTitle(){return title;}
     public String getDate(){return date;}
     public String getTime(){return time;}
     public String getDescription(){return description;}
+
+    public String getImportance(){return importance;}
 
 }

@@ -87,8 +87,10 @@ public class calendarPage extends AppCompatActivity {
                         String de = cursor.getString(2);
                         String da = cursor.getString(3);
                         String tm = cursor.getString(4);
+                        String status = cursor.getString(5);
+                        String importance = cursor.getString(6);
                         if (da.equals(date)) {
-                            dataSet.add(new dataSets(ti, de, da, tm));
+                            dataSet.add(new dataSets(ti, de, da, tm, importance));
                         }
                     }
                 }
@@ -141,8 +143,10 @@ public class calendarPage extends AppCompatActivity {
                 String de = cursor.getString(2);
                 String da = cursor.getString(3);
                 String tm = cursor.getString(4);
+                String status = cursor.getString(5);
+                String importance = cursor.getString(6);
                 if (da.equals(date1)) {
-                    dataSet.add(new dataSets(ti, de, da, tm));
+                    dataSet.add(new dataSets(ti, de, da, tm, importance));
                 }
             }
         }

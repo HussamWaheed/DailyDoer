@@ -12,6 +12,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,6 +28,7 @@ public class addActivity extends AppCompatActivity {
     Switch sw_btn;
     Button sub_btn, re_btn;
     ImageButton image_btn;
+    Spinner spinnerImportance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,14 @@ public class addActivity extends AppCompatActivity {
         re_btn = findViewById(R.id.reset);
         image_btn = findViewById(R.id.image_btn);
         topBar = findViewById(R.id.title);
+        spinnerImportance = findViewById(R.id.spinner_importance);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.importance_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerImportance.setAdapter(adapter);
+
+
         Intent intent = getIntent();
         //if update status is false means getIntent() from the adding actions such as, add buttons, otherwise, change texts to update, and set text for title and description.
         if (intent.getBooleanExtra("update",false)){
@@ -59,52 +70,47 @@ public class addActivity extends AppCompatActivity {
 
         }));
         //when submit button is clicked, submit all the content to the database and output it on the screen
-        sub_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String title1 = title.getText().toString();
-                String desc = description.getText().toString();
-                //format the date string
-                String date1 = String.format("%02d-%02d-%d", date.getMonth()+1, date.getDayOfMonth(), date.getYear());
-                //set time's default value to all day
-                String time1 = "All Day";
-                //title and date are essential input
-                if (title1.isEmpty() || date1.isEmpty()){
-                    Toast.makeText(v.getContext(), "Please type a title or select a date!", Toast.LENGTH_LONG).show();
-                }else{
-                    //if timepicker is enabled, update time to specific time
-                    if (time.isEnabled()){
-                        time1 = String.format("%02d:%02d", time.getHour(), time.getMinute());
-                    }
-                    //if update status is false, means do add action
-                    if (intent.getBooleanExtra("update",false)){
-                        long update = database.editItem(title1, desc, date1, time1,"false");
-                        if(update<0){
-                            Toast.makeText(getApplicationContext(),"Task is Not Updated!", Toast.LENGTH_LONG).show();
-                        }else {
-                            Toast.makeText(getApplicationContext(),"Task is Updated!", Toast.LENGTH_LONG).show();
-                        }
-                    }else{//otherwise, do update tasks action
-                        long row = database.addItems(title1, desc, date1, time1, "false");
-                        if(row<0){
-                            Toast.makeText(getApplicationContext(),"Task is Not Added!", Toast.LENGTH_LONG).show();
-                        }else {
-                            Toast.makeText(getApplicationContext(),"Task is Added!", Toast.LENGTH_LONG).show();
-                        }
-                    }
+        sub_btn.setOnClickListener(v -> {
+            String title1 = title.getText().toString().trim();
+            String desc = description.getText().toString().trim();
+            String importance = spinnerImportance.getSelectedItem().toString();
+            String date1 = String.format("%02d-%02d-%d", date.getMonth() + 1, date.getDayOfMonth(), date.getYear());
+            String time1 = time.isEnabled() ? String.format("%02d:%02d", time.getHour(), time.getMinute()) : "All Day";
 
-                    //if the last page is calendar, after submitting, jump back to the calendar page.
-                    if (intent.getStringExtra("page").equals("calendar")){
-                        Intent calendarView = new Intent(addActivity.this, calendarPage.class);
-                        startActivity(calendarView);
-                    }else{//otherwise, jump back to the list page
-                        Intent dashBoardView = new Intent(addActivity.this, listActivity.class);
-                        startActivity(dashBoardView);
+            if (title1.isEmpty() || date1.isEmpty()) {
+                Toast.makeText(v.getContext(), "Please type a title or select a date!", Toast.LENGTH_LONG).show();
+            } else {
+                long result;
+                if (intent.getBooleanExtra("update", false)) {
+                    result = database.editItem(title1, desc, date1, time1, "false", importance);
+                    if(result < 0){
+                        Toast.makeText(getApplicationContext(),"Task is Not Updated!", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(),"Task is Updated!", Toast.LENGTH_LONG).show();
                     }
-
-                    finish();
+                } else {
+                    result = database.addItems(title1, desc, date1, time1, "false", importance);
+                    if(result < 0){
+                        Toast.makeText(getApplicationContext(),"Task is Not Added!", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(),"Task is Added!", Toast.LENGTH_LONG).show();
+                    }
                 }
+
+                // Reset the switch and handle its change listener
+                sw_btn.setOnCheckedChangeListener((buttonView, isChecked) -> time.setEnabled(!isChecked));
+
+                // Navigation logic after saving or updating the task
+                if ("calendar".equals(intent.getStringExtra("page"))) {
+                    startActivity(new Intent(addActivity.this, calendarPage.class));
+                } else if ("dash".equals(intent.getStringExtra("page"))) {
+                    startActivity(new Intent(addActivity.this, dashboardActivity.class));
+                } else {
+                    startActivity(new Intent(addActivity.this, listActivity.class));
+                }
+                finish(); // Ensure you finish the activity to clear it from the back stack
             }
+
         });
 
         //reset button, reset inputs
@@ -115,7 +121,7 @@ public class addActivity extends AppCompatActivity {
                 description.setText("");
             }
         });
-    //impage button: go back to the last page
+        //impage button: go back to the last page
         image_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

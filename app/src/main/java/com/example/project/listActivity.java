@@ -54,7 +54,8 @@ public class listActivity extends AppCompatActivity {
                 String da = cursor.getString(3);
                 String tm = cursor.getString(4);
                 String status = cursor.getString(5);
-                dataSet.add(new dataSets(ti, de, da, tm));
+                String importance = cursor.getString(6);
+                dataSet.add(new dataSets(ti, de, da, tm, importance));
             }
         }
         if(dataSet.isEmpty()){
