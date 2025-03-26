@@ -6,17 +6,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,7 +36,6 @@ public class addActivity extends AppCompatActivity {
     ImageButton image_btn;
     Spinner spinnerImportance;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +48,7 @@ public class addActivity extends AppCompatActivity {
                 startActivity(intent); //will take user to the allow exact alarm setting
             }
         }
-
+        
         title = findViewById(R.id.ed_title);
         description = findViewById(R.id.ed_description);
         date = findViewById(R.id.date_pick);
@@ -60,10 +59,12 @@ public class addActivity extends AppCompatActivity {
         image_btn = findViewById(R.id.image_btn);
         topBar = findViewById(R.id.title);
         spinnerImportance = findViewById(R.id.spinner_importance);
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.importance_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerImportance.setAdapter(adapter);
+
 
         Intent intent = getIntent();
         //if update status is false means getIntent() from the adding actions such as, add buttons, otherwise, change texts to update, and set text for title and description.
@@ -108,7 +109,7 @@ public class addActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"Task is Not Added!", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getApplicationContext(),"Task is Added!", Toast.LENGTH_LONG).show();
-                        scheduleTaskAlarm(addActivity.this, title1, date1, time1); // set alarm after task is saved
+                        scheduleTaskAlarm(addActivity.this, title1, date1, time1); //set alarm after task is saved
                     }
                 }
 
@@ -128,7 +129,6 @@ public class addActivity extends AppCompatActivity {
 
         });
 
-
         //reset button, reset inputs
         re_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +137,7 @@ public class addActivity extends AppCompatActivity {
                 description.setText("");
             }
         });
-    //impage button: go back to the last page
+        //impage button: go back to the last page
         image_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +155,6 @@ public class addActivity extends AppCompatActivity {
             }
         });
     }
-    //schedule an alarm notification for a specific task based on its date and time
     private void scheduleTaskAlarm(Context context, String title, String date, String time) {
         if (time.equals("All Day")) {//skip if marked as all day
             return;
@@ -192,6 +191,5 @@ public class addActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
 
 }
