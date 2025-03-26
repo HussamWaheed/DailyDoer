@@ -8,7 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class dashboardActivity extends AppCompatActivity {
-    Button add_btn, complete_btn, calendar_btn, all_btn;
+    Button add_btn, complete_btn, calendar_btn, all_btn, focus_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +19,7 @@ public class dashboardActivity extends AppCompatActivity {
         complete_btn = findViewById(R.id.complete_btn);
         calendar_btn = findViewById(R.id.calendar_btn);
         all_btn = findViewById(R.id.all_btn);
+        focus_btn = findViewById(R.id.focus_btn);
 
         //jump to add task page
         add_btn.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +59,18 @@ public class dashboardActivity extends AppCompatActivity {
                 Intent listPage = new Intent(dashboardActivity.this, listActivity.class);
                 listPage.putExtra("page", "complete");
                 startActivity(listPage);
+                finish();
+            }
+        });
+
+        //go to focus timer page
+        focus_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent focusPage = new Intent(dashboardActivity.this, FocusActivity.class);
+                //intent.putExtra("page", "dash");
+                focusPage.putExtra("page", "focus");
+                startActivity(focusPage);
                 finish();
             }
         });
