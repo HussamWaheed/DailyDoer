@@ -14,23 +14,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Locale;
 import java.util.Random;
 
-/**
- * FocusActivity implements a Pomodoro-style timer with motivational quotes.
- * Features include:
- * - 25-minute countdown timer
- * - Start/Pause/Reset functionality
- * - Random motivational quotes display
- * - Notification when timer completes
- */
+
 public class FocusActivity extends AppCompatActivity {
 
     // UI Components
-    private TextView timerText;    // Displays the countdown time
-    private TextView quoteText;    // Displays motivational quotes
-    private Button startButton;    // Starts the timer
-    private Button pauseButton;    // Pauses the timer
-    private Button resetButton;   // Resets the timer
-    private ImageButton image_btn; // Navigation back button
+    private TextView timerText;
+    private TextView quoteText;
+    private Button startButton;
+    private Button pauseButton;
+    private Button resetButton;
+    private ImageButton image_btn;
 
     // Timer Variables
     private CountDownTimer countDownTimer; // The countdown timer instance
@@ -41,7 +34,23 @@ public class FocusActivity extends AppCompatActivity {
     private final String[] quotes = {
             "“Either you run the day, or the day runs you.” – Jim Rohn",
             "“Someday is not a day of the week.” – Janet Dailey",
-            // ... (other quotes remain the same)
+            "“Make each day your masterpiece.” – John Wooden",
+            "“Your time is limited, don’t waste it living someone else’s life.” – Steve Jobs",
+            "“The best way to get started is to quit talking and begin doing.” – Walt Disney",
+            "“Do one thing every day that scares you.” – Eleanor Roosevelt",
+            "“Believe you can and you're halfway there.” – Theodore Roosevelt",
+            "“Everything you’ve ever wanted is on the other side of fear.” – George Addair",
+            "“Success is the sum of small efforts, repeated day-in and day-out.” – Robert Collier",
+            "“Don’t watch the clock; do what it does. Keep going.” – Sam Levenson",
+            "“The secret of getting ahead is getting started.” – Mark Twain",
+            "“Quality means doing it right when no one is looking.” – Henry Ford",
+            "“If you spend too much time thinking about a thing, you’ll never get it done.” – Bruce Lee",
+            "“Start where you are. Use what you have. Do what you can.” – Arthur Ashe",
+            "“Go as far as you can see; when you get there, you’ll be able to see further.” – Thomas Carlyle",
+            "“Don’t let yesterday take up too much of today.” – Will Rogers",
+            "“I would rather die of passion than of boredom.” – Vincent van Gogh",
+            "“Great things are not done by impulse, but by a series of small things brought together.” – Vincent van Gogh",
+            "“Well done is better than well said.” – Benjamin Franklin",
             "“Success usually comes to those who are too busy to be looking for it.” – Henry David Thoreau"
     };
 
@@ -76,10 +85,9 @@ public class FocusActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Starts the countdown timer if not already running
-     * Creates a new CountDownTimer that updates every second
-     */
+
+    //Start the countdown timer
+    //If not already running, create a new one
     private void startTimer() {
         if (timerRunning) return; // Prevent multiple timers
 
@@ -103,10 +111,9 @@ public class FocusActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Timer Started!", Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * Pauses the running timer
-     * @param showToast Whether to show a pause confirmation toast
-     */
+
+    //pauses the running timer
+
     private void pauseTimer(boolean showToast) {
         if (countDownTimer != null) {
             countDownTimer.cancel();
@@ -117,10 +124,8 @@ public class FocusActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Resets the timer to initial 25-minute duration
-     * Also displays a new random quote
-     */
+
+    //reset timer to 25 minutes, displays a new random quote.
     private void resetTimer() {
         timeLeftInMillis = 25 * 60 * 1000; // Reset to 25 minutes
         updateTimerText();
@@ -129,10 +134,8 @@ public class FocusActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Reset", Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * Updates the timer display with formatted time
-     * Converts milliseconds to MM:SS format
-     */
+
+    //updates the timer display with formatted time to MM:SS
     private void updateTimerText() {
         int minutes = (int) (timeLeftInMillis / 1000) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
@@ -140,9 +143,7 @@ public class FocusActivity extends AppCompatActivity {
         timerText.setText(timeFormatted);
     }
 
-    /**
-     * Displays a random quote from the quotes array
-     */
+    // displays a random quote from the array
     private void showRandomQuote() {
         int index = new Random().nextInt(quotes.length);
         quoteText.setText(quotes[index]);
