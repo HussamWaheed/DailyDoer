@@ -7,75 +7,84 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Main dashboard activity that serves as the central navigation hub
+ * Provides buttons to access all major features of the application
+ */
 public class dashboardActivity extends AppCompatActivity {
-    Button add_btn, complete_btn, calendar_btn, all_btn;
-    Button focus_btn;
+    // UI Component Declarations
+    Button add_btn;         // Button to add new tasks
+    Button complete_btn;    // Button to view completed tasks
+    Button calendar_btn;    // Button to access calendar view
+    Button all_btn;         // Button to view all tasks
+    Button focus_btn;       // Button to access focus timer
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dashboard_layout);
+        setContentView(R.layout.dashboard_layout);  // Set the layout for this activity
 
+        // Initialize all buttons by finding their views
         add_btn = findViewById(R.id.add_btn);
         complete_btn = findViewById(R.id.complete_btn);
         calendar_btn = findViewById(R.id.calendar_btn);
         all_btn = findViewById(R.id.all_btn);
         focus_btn = findViewById(R.id.focus_btn);
 
-        //jump to add task page
+        // Set click listener for Add Task button
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Create intent to launch addActivity
                 Intent addPage = new Intent(dashboardActivity.this, addActivity.class);
+                // Pass context information that we're coming from dashboard
                 addPage.putExtra("page", "dash");
                 startActivity(addPage);
-                finish();
+                // Note: finish() is commented out to allow returning to dashboard
             }
         });
-        //jump to calendar page
+
+        // Set click listener for Calendar button
         calendar_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Create intent to launch calendar view
                 Intent calendarPage = new Intent(dashboardActivity.this, calendarPage.class);
                 startActivity(calendarPage);
-                finish();
             }
         });
 
-        //jump to list page
+        // Set click listener for All Tasks button
         all_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Create intent to launch listActivity in "all tasks" mode
                 Intent listPage = new Intent(dashboardActivity.this, listActivity.class);
-                listPage.putExtra("page", "list");
+                listPage.putExtra("page", "list");  // Indicate we want to see all tasks
                 startActivity(listPage);
-                finish();
             }
         });
 
-        //jump to complete task page
+        // Set click listener for Completed Tasks button
         complete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Create intent to launch listActivity in "completed tasks" mode
                 Intent listPage = new Intent(dashboardActivity.this, listActivity.class);
-                listPage.putExtra("page", "complete");
+                listPage.putExtra("page", "complete");  // Filter for completed tasks
                 startActivity(listPage);
-                finish();
             }
         });
 
-        //go to focus timer page
+        // Set click listener for Focus Timer button
         focus_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Create intent to launch focus timer activity
                 Intent focusPage = new Intent(dashboardActivity.this, FocusActivity.class);
-                //intent.putExtra("page", "dash");
-                focusPage.putExtra("page", "focus");
+                focusPage.putExtra("page", "focus");  // Indicate focus mode
                 startActivity(focusPage);
-                finish();
             }
         });
-
-
     }
 }

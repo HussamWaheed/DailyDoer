@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,86 +18,169 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class listActivity extends AppCompatActivity {
-    RecyclerView recyclerView;
-    ImageButton image_btn;
+/**
+ * Activity that displays a list of tasks, either completed or pending
+ * depending on the intent extras. Implements task deletion functionality.
+ */
+public class listActivity extends AppCompatActivity implements calendarPage_Adapter.TaskDeleteListener {
 
-    TextView title;
+    // UI Components
+    RecyclerView recyclerView;       // Displays the list of tasks
+    ImageButton image_btn;          // Back navigation button
+    TextView title;                 // Activity title text
+    FloatingActionButton fab_add;   // Button to add new tasks
 
-    FloatingActionButton fab_add;
+    // Data
+    ArrayList<dataSets> dataSet = new ArrayList<>(); // List of tasks to display
+    private dbhelper database;      // Database helper instance
+    private boolean showCompleted;  // Flag to determine if showing completed tasks
 
-    ArrayList<dataSets> dataSet = new ArrayList<>();
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_layout);
+
+        // Initialize views
         recyclerView = findViewById(R.id.recyclerView1);
         image_btn = findViewById(R.id.image_btn);
         fab_add = findViewById(R.id.fab_add);
         title = findViewById(R.id.title);
+
+        // Determine if we should show completed or pending tasks
         Intent intent = getIntent();
-        dbhelper database = new dbhelper(getApplicationContext());
+        showCompleted = intent.getStringExtra("page") != null &&
+                intent.getStringExtra("page").equals("complete");
+
+        // Initialize database
+        database = new dbhelper(getApplicationContext());
         database.getReadableDatabase();
+
+        // Set up RecyclerView layout
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        Cursor cursor = database.displayData("false");
-        //if getExtra from complete page
-        if (intent.getStringExtra("page")!= null && intent.getStringExtra("page").equals("complete")){
+
+        // Update title if showing completed tasks
+        if (showCompleted) {
             title.setText("Complete Tasks");
-            cursor = database.complete_displayData("true");
         }
-        //display the tasks
-        if (cursor.getCount() == 0) {
-        } else {
-            while (cursor.moveToNext()) {
-                String ti = cursor.getString(1);
-                String de = cursor.getString(2);
-                String da = cursor.getString(3);
-                String tm = cursor.getString(4);
-                String status = cursor.getString(5);
-                String importance = cursor.getString(6);
-                dataSet.add(new dataSets(ti, de, da, tm, importance));
-            }
-        }
-        if(dataSet.isEmpty()){
+
+        // Load and display tasks
+        refreshTaskList();
+
+        // Show message if no tasks found
+        if (dataSet.isEmpty()) {
             Toast.makeText(getApplicationContext(), "No Tasks!", Toast.LENGTH_SHORT).show();
         }
-        //sort datalist to make sure the tasks is ordered by date and time.
-        Collections.sort(dataSet, new Comparator() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                dataSets d1 = (dataSets) o1;
-                dataSets d2 = (dataSets) o2;
-                //compare the date and time, to make sure the time the tasks lists ascending by date and time
-                if (d1.getDate().compareToIgnoreCase(d2.getDate())==0){
-                    return d1.getTime().compareToIgnoreCase(d2.getTime());
-                }else{
-                    return d1.getDate().compareToIgnoreCase(d2.getDate());
-                }
-            }
-        });
-        cursor.close();
-        calendarPage_Adapter myAdapter = new calendarPage_Adapter(dataSet, listActivity.this);
+
+        // Set up RecyclerView adapter
+        calendarPage_Adapter myAdapter = new calendarPage_Adapter(dataSet, this);
         recyclerView.setAdapter(myAdapter);
-        //when image button is clicked, go back to the dashboard
+
+        // Back button returns to dashboard
         image_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent dashboard = new Intent(listActivity.this, dashboardActivity.class);
                 startActivity(dashboard);
-                finish();
             }
         });
 
-        //when floating action button is clicked, jump to add_task page
+        // Add button launches add task activity
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent addPage = new Intent(listActivity.this, addActivity.class);
-                addPage.putExtra("page", "list");
+                addPage.putExtra("page", "list"); // Indicate we came from list view
                 startActivity(addPage);
-                finish();
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refresh task list when returning to activity
+        refreshTaskList();
+        // Update adapter with new data
+        calendarPage_Adapter myAdapter = new calendarPage_Adapter(dataSet, this);
+        recyclerView.setAdapter(myAdapter);
+    }
+
+    /**
+     * Callback for when a task is deleted from the adapter
+     * @param taskId The ID of the task to delete
+     */
+    @Override
+    public void onDeleteTask(int taskId) {
+        // Log pre-deletion state
+        boolean existsBefore = database.taskExists(taskId);
+        Log.d("DELETION", "Task exists before delete: " + existsBefore);
+
+        try {
+            // Attempt direct deletion first
+            if (database.deleteTask(taskId)) {
+                Toast.makeText(this, "Task deleted", Toast.LENGTH_SHORT).show();
+            }
+            // If that fails, try archiving then deleting
+            else if (database.moveToDeletedTasks(taskId) && database.deleteTask(taskId)) {
+                Toast.makeText(this, "Task archived and deleted", Toast.LENGTH_SHORT).show();
+            } else {
+                // Log and show error if both methods fail
+                boolean existsAfter = database.taskExists(taskId);
+                Log.d("DELETION", "Task exists after delete attempts: " + existsAfter);
+                Toast.makeText(this, "Delete failed - task still exists", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            // Log any exceptions during deletion
+            Log.e("DELETION", "Error during deletion", e);
+            Toast.makeText(this, "Delete error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * Refreshes the task list from database
+     * Sorts tasks by date then time
+     */
+    private void refreshTaskList() {
+        dataSet.clear(); // Clear existing data
+
+        // Get appropriate cursor based on completed/pending filter
+        Cursor cursor = showCompleted ?
+                database.displayData("true") :
+                database.displayData("false");
+
+        // Populate dataSet from cursor
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                String ti = cursor.getString(1);
+                String de = cursor.getString(2);
+                String da = cursor.getString(3);
+                String tm = cursor.getString(4);
+                String importance = cursor.getString(6);
+
+                dataSet.add(new dataSets(id, ti, de, da, tm, importance));
+            } while (cursor.moveToNext());
+        }
+
+        // Always close cursor when done
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        // Sort tasks by date, then by time
+        Collections.sort(dataSet, new Comparator<dataSets>() {
+            @Override
+            public int compare(dataSets d1, dataSets d2) {
+                // First compare dates
+                int dateCompare = d1.getDate().compareToIgnoreCase(d2.getDate());
+                if (dateCompare == 0) {
+                    // If dates are equal, compare times
+                    return d1.getTime().compareToIgnoreCase(d2.getTime());
+                } else {
+                    return dateCompare;
+                }
+            }
+        });
     }
 }
