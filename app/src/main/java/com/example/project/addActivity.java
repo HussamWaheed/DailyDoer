@@ -119,9 +119,7 @@ public class addActivity extends AppCompatActivity {
                 // Navigation logic after saving or updating the task
                 if ("calendar".equals(intent.getStringExtra("page"))) {
                     startActivity(new Intent(addActivity.this, calendarPage.class));
-                } else if ("dash".equals(intent.getStringExtra("page"))) {
-                    startActivity(new Intent(addActivity.this, dashboardActivity.class));
-                } else {
+                } else if ("dash".equals(intent.getStringExtra("page")) || "list".equals(intent.getStringExtra("page"))) {
                     startActivity(new Intent(addActivity.this, listActivity.class));
                 }
                 finish(); // Ensure you finish the activity to clear it from the back stack
