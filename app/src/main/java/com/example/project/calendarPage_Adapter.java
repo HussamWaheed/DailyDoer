@@ -17,21 +17,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+/**
+ * RecyclerView Adapter for displaying tasks in calendar view
+ * Handles task display, completion marking, deletion, and updating
+ */
 public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adapter.MyViewHolder> {
 
-    ArrayList<dataSets> dateList;
-    Context context;
-    private TaskDeleteListener deleteListener; // Added interface reference for Task Deleting
+    ArrayList<dataSets> dateList;  // List of tasks to display
+    Context context;              // Activity context
+    private TaskDeleteListener deleteListener; // Callback interface for task deletion
 
-    // Interface for task deletion callback
+    /**
+     * Interface for communicating task deletion to parent activity
+     */
     public interface TaskDeleteListener {
-        void onDeleteTask(int taskId); // Pass taskId for deletion
+        void onDeleteTask(int taskId); // Called when a task needs to be deleted
     }
 
+    /**
+     * Constructor for the adapter
+     * @param dateList List of tasks to display
+     * @param context The activity context (must implement TaskDeleteListener)
+     */
     public calendarPage_Adapter(ArrayList<dataSets> dateList, Context context) {
         this.dateList = dateList;
         this.context = context;
-        // Check if the context implements the TaskDeleteListener
+        // Verify that the hosting activity implements our callback interface
         if (context instanceof TaskDeleteListener) {
             this.deleteListener = (TaskDeleteListener) context;
         }
@@ -40,15 +51,19 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.calendar_todolist_layout, parent, false);
+        // Inflate the item layout and create a new ViewHolder
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.calendar_todolist_layout, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        // Get the task data for current position
         dataSets data = dateList.get(position);
         Log.d("ImportanceCheck", "Task: " + data.getTitle() + ", Importance: " + data.getImportance());
 
+        // Set view contents from task data
         holder.title.setText(data.getTitle());
         holder.date.setText(data.getDate());
         holder.time.setText(data.getTime());
@@ -56,29 +71,34 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
         holder.checkBox.setText("Done");
         holder.card.setVisibility(View.VISIBLE);
 
-        // Directly use holder.getAdapterPosition() inside the block
+        // Clear previous checkbox listener to avoid recycling issues
         holder.checkBox.setOnCheckedChangeListener(null);
 
-        // Set color based on the importance of the task
+        // Set card color based on task importance
         switch (data.getImportance()) {
             case "High":
-                holder.card.setCardBackgroundColor(context.getResources().getColor(R.color.high_importance)); // Red color for high importance
+                holder.card.setCardBackgroundColor(context.getResources()
+                        .getColor(R.color.high_importance)); // Red for high priority
                 break;
             case "Medium":
-                holder.card.setCardBackgroundColor(context.getResources().getColor(R.color.medium_importance)); // Yellow color for medium importance
+                holder.card.setCardBackgroundColor(context.getResources()
+                        .getColor(R.color.medium_importance)); // Yellow for medium
                 break;
             case "Low":
-                holder.card.setCardBackgroundColor(context.getResources().getColor(R.color.no_importance)); // Default color for no/low importance
+                holder.card.setCardBackgroundColor(context.getResources()
+                        .getColor(R.color.no_importance)); // Default for low
                 break;
         }
 
-        // If checkbox is checked, change the status of the task and remove it from the screen
+        // Handle task completion (checkbox checked)
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             dbhelper database = new dbhelper(context.getApplicationContext());
             if (isChecked) {
-                database.editItem(data.getTitle(), data.getDescription(), data.getDate(), data.getTime(), "true", data.getImportance());
+                // Mark task as completed in database
+                database.editItem(data.getTitle(), data.getDescription(),
+                        data.getDate(), data.getTime(), "true", data.getImportance());
 
-                // Use holder.getAdapterPosition() directly here
+                // Remove task from view
                 int adapterPosition = holder.getAdapterPosition();
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     dateList.remove(adapterPosition);
@@ -88,12 +108,14 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
             }
         });
 
-        // Delete button click handler
+        // Handle task deletion
         holder.deleteBtn.setOnClickListener(v -> {
             if (deleteListener != null) {
                 int currentPosition = holder.getAdapterPosition();
                 if (currentPosition != RecyclerView.NO_POSITION) {
-                    deleteListener.onDeleteTask(data.getId()); // Pass taskId for deletion
+                    // Notify parent activity to handle deletion
+                    deleteListener.onDeleteTask(data.getId());
+                    // Update UI
                     dateList.remove(currentPosition);
                     notifyItemRemoved(currentPosition);
                     notifyItemRangeChanged(currentPosition, dateList.size());
@@ -101,20 +123,19 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
             }
         });
 
-        // When long-clicking the card view, jump to update task page and edit task
+        // Handle task editing (long press)
         holder.card.setOnLongClickListener(v -> {
             Intent update = new Intent(context, addActivity.class);
             update.putExtra("update", true);
 
+            // Track which page initiated the update
             if (context.getClass().equals(calendarPage.class)) {
-                // Long click from calendar page
-                update.putExtra("page", "calendar");
+                update.putExtra("page", "calendar"); // From calendar page
             } else {
-                // Long press from list page
-                update.putExtra("page", "dash");
+                update.putExtra("page", "dash");      // From dashboard
             }
 
-            // Put everything to the update page
+            // Pass all task data to edit activity
             update.putExtra("title", data.getTitle());
             update.putExtra("description", data.getDescription());
             update.putExtra("date", data.getDate());
@@ -122,15 +143,18 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
             update.putExtra("importance", data.getImportance());
 
             context.startActivity(update);
-            return true;
+            return true; // Consume the long click
         });
     }
 
     @Override
     public int getItemCount() {
-        return dateList.size();
+        return dateList.size(); // Return total number of tasks
     }
 
+    /**
+     * ViewHolder class that holds references to all views in a single item
+     */
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView title, date, time, description;
         CardView card;
@@ -139,6 +163,7 @@ public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adap
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            // Initialize all view references
             card = itemView.findViewById(R.id.card);
             title = itemView.findViewById(R.id.title);
             date = itemView.findViewById(R.id.date);
