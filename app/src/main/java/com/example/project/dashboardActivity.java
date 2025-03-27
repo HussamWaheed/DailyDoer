@@ -75,6 +75,5 @@ public class dashboardActivity extends AppCompatActivity {
                 //finish();
             }
         });
-
-
     }
+}
