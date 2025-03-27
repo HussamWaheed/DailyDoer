@@ -38,7 +38,14 @@ public class addActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_layout);
-
+        //request SCHEDULE_EXACT_ALARM permission
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            if (!alarmManager.canScheduleExactAlarms()) {
+                Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                startActivity(intent); //will take user to the allow exact alarm setting
+            }
+        }
         // Initialize all UI components by finding their views from the layout
         title = findViewById(R.id.ed_title);
         description = findViewById(R.id.ed_description);
