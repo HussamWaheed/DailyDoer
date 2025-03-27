@@ -18,13 +18,7 @@
             android:background="@color/custom3"
             app:srcCompat="?attr/homeAsUpIndicator" />
 
-        <Spinner
-            android:id="@+id/spinner_importance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:entries="@array/importance_array" />
-
+        S
         <TextView
             android:id="@+id/title"
             android:layout_width="350dp"
@@ -35,7 +29,12 @@
             android:textColor="@color/white"
             android:textSize="30sp" />
     </LinearLayout>
-
+    <Spinner
+        android:id="@+id/spinner_importance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:entries="@array/importance_array" />
     <EditText
         android:id="@+id/ed_title"
         android:layout_width="match_parent"
@@ -67,7 +66,7 @@
     <TimePicker
         android:id="@+id/time_pick"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:timePickerMode="spinner" />
 
     <LinearLayout
@@ -101,7 +100,7 @@
             android:id="@+id/submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="110dp"
+            android:layout_marginLeft="50dp"
             android:backgroundTint="@color/custom3"
             android:text="Submit" />
 

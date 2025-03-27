@@ -27,16 +27,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         // Initialize logo image view
         image = findViewById(R.id.image);
-
         // Load and display animated GIF logo using Glide library
         // Glide handles memory-efficient GIF loading and playback
         Glide.with(this)
                 .load(R.drawable.logo_gif)  // Load GIF resource
                 .into(image);               // Display in ImageView
-
         // Create delayed transition to dashboard
         new Handler().postDelayed(new Runnable() {
             @Override
