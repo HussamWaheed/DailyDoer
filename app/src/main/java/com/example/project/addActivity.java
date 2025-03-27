@@ -29,8 +29,8 @@ public class addActivity extends AppCompatActivity {
     DatePicker date;
     TimePicker time;
     Switch sw_btn;
-    Button sub_btn, re_btn, back_btn; // New "Back" button
-    ImageButton image_btn;  // Back arrow button
+    Button sub_btn, re_btn, back_btn;
+    ImageButton image_btn;
     Spinner spinnerImportance;
 
     @Override
@@ -46,8 +46,8 @@ public class addActivity extends AppCompatActivity {
         sw_btn = findViewById(R.id.swbtn);
         sub_btn = findViewById(R.id.submit);
         re_btn = findViewById(R.id.reset);
-        back_btn = findViewById(R.id.back_button);  // New "Back" button
-        image_btn = findViewById(R.id.image_btn);  // The back arrow button
+        back_btn = findViewById(R.id.back_button);
+        image_btn = findViewById(R.id.image_btn);
         topBar = findViewById(R.id.title);
         spinnerImportance = findViewById(R.id.spinner_importance);
 
@@ -56,12 +56,11 @@ public class addActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerImportance.setAdapter(adapter);
 
-        // **Set up the back button (image_btn)**
         image_btn.setOnClickListener(v -> {
-            // Navigating to MainActivity without any animation
+
             Intent intent = new Intent(addActivity.this, dashboardActivity.class);
             startActivity(intent);
-            finish(); // Finish current activity to prevent back press animation
+            finish(); 
         });
 
         // **Set up the "Back" button**
