@@ -1,0 +1,188 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.project"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+9        android:targetSdkVersion="35" />
+10
+11    <!-- add notification permission -->
+12    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+12-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:6:5-79
+12-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:6:22-76
+13    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+13-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:7:5-77
+13-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:7:22-74
+14    <uses-permission android:name="android.permission.INTERNET" />
+14-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:45:5-66
+14-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:45:22-64
+15
+16    <permission
+16-->[androidx.core:core:1.13.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\1bac8957d614a6ff6664ec8178009486\transformed\core-1.13.0\AndroidManifest.xml:22:5-24:47
+17        android:name="com.example.project.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+17-->[androidx.core:core:1.13.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\1bac8957d614a6ff6664ec8178009486\transformed\core-1.13.0\AndroidManifest.xml:23:9-81
+18        android:protectionLevel="signature" />
+18-->[androidx.core:core:1.13.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\1bac8957d614a6ff6664ec8178009486\transformed\core-1.13.0\AndroidManifest.xml:24:9-44
+19
+20    <uses-permission android:name="com.example.project.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+20-->[androidx.core:core:1.13.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\1bac8957d614a6ff6664ec8178009486\transformed\core-1.13.0\AndroidManifest.xml:26:5-97
+20-->[androidx.core:core:1.13.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\1bac8957d614a6ff6664ec8178009486\transformed\core-1.13.0\AndroidManifest.xml:26:22-94
+21
+22    <application
+22-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:8:5-44:19
+23        android:allowBackup="true"
+23-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:9:9-35
+24        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+24-->[androidx.core:core:1.13.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\1bac8957d614a6ff6664ec8178009486\transformed\core-1.13.0\AndroidManifest.xml:28:18-86
+25        android:dataExtractionRules="@xml/data_extraction_rules"
+25-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:10:9-65
+26        android:debuggable="true"
+27        android:extractNativeLibs="false"
+28        android:fullBackupContent="@xml/backup_rules"
+28-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:11:9-54
+29        android:icon="@mipmap/ic_launcher"
+29-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:12:9-43
+30        android:label="@string/app_name"
+30-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:13:9-41
+31        android:roundIcon="@mipmap/ic_launcher"
+31-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:14:9-48
+32        android:supportsRtl="true"
+32-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:15:9-35
+33        android:testOnly="true"
+34        android:theme="@style/Theme.Project" >
+34-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:16:9-45
+35        <activity
+35-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:18:9-26:20
+36            android:name="com.example.project.MainActivity"
+36-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:19:13-41
+37            android:exported="true" >
+37-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:20:13-36
+38            <intent-filter>
+38-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:21:13-25:29
+39                <action android:name="android.intent.action.MAIN" />
+39-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:22:17-69
+39-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:22:25-66
+40
+41                <category android:name="android.intent.category.LAUNCHER" />
+41-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:24:17-77
+41-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:24:27-74
+42            </intent-filter>
+43        </activity>
+44        <activity
+44-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:27:9-28:39
+45            android:name="com.example.project.calendarPage"
+45-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:27:19-47
+46            android:exported="false" />
+46-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:28:13-37
+47        <activity
+47-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:29:9-30:39
+48            android:name="com.example.project.addActivity"
+48-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:29:19-46
+49            android:exported="false" />
+49-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:30:13-37
+50        <activity
+50-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:31:9-32:39
+51            android:name="com.example.project.dashboardActivity"
+51-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:31:19-52
+52            android:exported="false" />
+52-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:32:13-37
+53        <activity
+53-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:33:9-34:39
+54            android:name="com.example.project.listActivity"
+54-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:33:19-47
+55            android:exported="false" />
+55-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:34:13-37
+56        <activity
+56-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:35:9-36:39
+57            android:name="com.example.project.FocusActivity"
+57-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:35:19-48
+58            android:exported="false" />
+58-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:36:13-37
+59        <activity
+59-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:37:9-39:40
+60            android:name="com.example.project.RecentlyDeletedActivity"
+60-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:38:13-52
+61            android:exported="false" />
+61-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:39:13-37
+62
+63        <receiver android:name="com.example.project.AlarmReceiver" />
+63-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:40:9-51
+63-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:40:19-48
+64
+65        <meta-data
+65-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:41:9-43:57
+66            android:name="preloaded_fonts"
+66-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:42:13-43
+67            android:resource="@array/preloaded_fonts" />
+67-->C:\Users\Ibtas\School\Winter 2025\COMP4200\Group_Project\DailyDoer\app\src\main\AndroidManifest.xml:43:13-54
+68
+69        <provider
+69-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\1fefc32272797250896936d1f18e63d7\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
+70            android:name="androidx.startup.InitializationProvider"
+70-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\1fefc32272797250896936d1f18e63d7\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
+71            android:authorities="com.example.project.androidx-startup"
+71-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\1fefc32272797250896936d1f18e63d7\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
+72            android:exported="false" >
+72-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\1fefc32272797250896936d1f18e63d7\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
+73            <meta-data
+73-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\1fefc32272797250896936d1f18e63d7\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+74                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+74-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\1fefc32272797250896936d1f18e63d7\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
+75                android:value="androidx.startup" />
+75-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\1fefc32272797250896936d1f18e63d7\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
+76            <meta-data
+76-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\0f9b8c32fe377803ce98f4d36fecd793\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:29:13-31:52
+77                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+77-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\0f9b8c32fe377803ce98f4d36fecd793\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:30:17-78
+78                android:value="androidx.startup" />
+78-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\0f9b8c32fe377803ce98f4d36fecd793\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:31:17-49
+79            <meta-data
+79-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:29:13-31:52
+80                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+80-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:30:17-85
+81                android:value="androidx.startup" />
+81-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:31:17-49
+82        </provider>
+83
+84        <receiver
+84-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:34:9-52:20
+85            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+85-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:35:13-76
+86            android:directBootAware="false"
+86-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:36:13-44
+87            android:enabled="true"
+87-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:37:13-35
+88            android:exported="true"
+88-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:38:13-36
+89            android:permission="android.permission.DUMP" >
+89-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:39:13-57
+90            <intent-filter>
+90-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:40:13-42:29
+91                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+91-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:41:17-91
+91-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:41:25-88
+92            </intent-filter>
+93            <intent-filter>
+93-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:43:13-45:29
+94                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+94-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:44:17-85
+94-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:44:25-82
+95            </intent-filter>
+96            <intent-filter>
+96-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:46:13-48:29
+97                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+97-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:47:17-88
+97-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:47:25-85
+98            </intent-filter>
+99            <intent-filter>
+99-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:49:13-51:29
+100                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+100-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:50:17-95
+100-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Ibtas\.gradle\caches\8.10.2\transforms\cedcc83e6e135021c7dd3b8610ddad66\transformed\profileinstaller-1.4.0\AndroidManifest.xml:50:25-92
+101            </intent-filter>
+102        </receiver>
+103    </application>
+104
+105</manifest>
