@@ -17,28 +17,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-/**
- * RecyclerView Adapter for displaying tasks in calendar view
- * Handles task display, completion marking, deletion, and updating
- */
+
+
+    // RecyclerView Adapter for displaying tasks in calendar view
+    // Handles completion marking, deletion, updating and task display
 public class calendarPage_Adapter extends RecyclerView.Adapter<calendarPage_Adapter.MyViewHolder> {
 
     ArrayList<dataSets> dateList;  // List of tasks to display
     Context context;              // Activity context
     private TaskDeleteListener deleteListener; // Callback interface for task deletion
 
-    /**
-     * Interface for communicating task deletion to parent activity
-     */
+
+
+    //Interface for communicating task deletion to parent activity
     public interface TaskDeleteListener {
         void onDeleteTask(int taskId); // Called when a task needs to be deleted
     }
 
-    /**
-     * Constructor for the adapter
-     * @param dateList List of tasks to display
-     * @param context The activity context (must implement TaskDeleteListener)
-     */
+
+
+    // Constructor for the adapter
+    //List of tasks to display
+
     public calendarPage_Adapter(ArrayList<dataSets> dateList, Context context) {
         this.dateList = dateList;
         this.context = context;
