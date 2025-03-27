@@ -76,7 +76,7 @@ public class FocusActivity extends AppCompatActivity {
         //back button functionality
         image_btn.setOnClickListener(v -> {
             startActivity(new Intent(FocusActivity.this, dashboardActivity.class));
-            finish();
+            //finish();
         });
     }
 

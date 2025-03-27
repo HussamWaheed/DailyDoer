@@ -98,9 +98,8 @@ public class listActivity extends AppCompatActivity implements calendarPage_Adap
         image_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent dashboard = new Intent(listActivity.this, dashboardActivity.class);
+                Intent dashboard = new Intent(com.example.project.listActivity.this, dashboardActivity.class);
                 startActivity(dashboard);
-                //finish();
             }
         });
 
@@ -108,12 +107,21 @@ public class listActivity extends AppCompatActivity implements calendarPage_Adap
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent addPage = new Intent(listActivity.this, addActivity.class);
+                Intent addPage = new Intent(com.example.project.listActivity.this, addActivity.class);
                 addPage.putExtra("page", "list");
                 startActivity(addPage);
-                //finish();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshTaskList();
+
+        // Update the adapter with the refreshed data
+        calendarPage_Adapter myAdapter = new calendarPage_Adapter(dataSet, this);
+        recyclerView.setAdapter(myAdapter);
     }
 
     // Handle task deletion from adapter
@@ -126,12 +134,12 @@ public class listActivity extends AppCompatActivity implements calendarPage_Adap
         try {
             // Try direct deletion first
             if (database.deleteTask(taskId)) {
-                refreshTaskList();
+                //refreshTaskList(); // This will refresh the task list
                 Toast.makeText(this, "Task deleted", Toast.LENGTH_SHORT).show();
             }
             // If that fails, try archiving then deleting
             else if (database.moveToDeletedTasks(taskId) && database.deleteTask(taskId)) {
-                refreshTaskList();
+                //refreshTaskList();
                 Toast.makeText(this, "Task archived and deleted", Toast.LENGTH_SHORT).show();
             } else {
                 // Debug why it failed
@@ -145,6 +153,7 @@ public class listActivity extends AppCompatActivity implements calendarPage_Adap
         }
     }
 
+
     // Refresh the task list after deletion
     private void refreshTaskList() {
         dataSet.clear();
@@ -157,12 +166,15 @@ public class listActivity extends AppCompatActivity implements calendarPage_Adap
                 String de = cursor.getString(2);
                 String da = cursor.getString(3);
                 String tm = cursor.getString(4);
-                dataSet.add(new dataSets(String.valueOf(id), ti, de, da, tm));
+                String importance = cursor.getString(6); // Get importance from database
+
+                // Use the constructor that includes importance but doesn't display ID
+                dataSet.add(new dataSets(id, ti, de, da, tm, importance)); // Fixed line
             } while (cursor.moveToNext());
         }
         cursor.close();
 
-        // Sort the updated task list by date and time
+        // Rest of your sorting logic remains exactly the same...
         Collections.sort(dataSet, new Comparator<dataSets>() {
             @Override
             public int compare(dataSets d1, dataSets d2) {
@@ -175,4 +187,3 @@ public class listActivity extends AppCompatActivity implements calendarPage_Adap
         });
     }
 }
-

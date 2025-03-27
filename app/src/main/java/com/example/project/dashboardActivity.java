@@ -29,7 +29,7 @@ public class dashboardActivity extends AppCompatActivity {
                 Intent addPage = new Intent(dashboardActivity.this, addActivity.class);
                 addPage.putExtra("page", "dash");
                 startActivity(addPage);
-                finish();
+                //finish();
             }
         });
         //jump to calendar page
@@ -38,7 +38,7 @@ public class dashboardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent calendarPage = new Intent(dashboardActivity.this, calendarPage.class);
                 startActivity(calendarPage);
-                finish();
+                //finish();
             }
         });
 
@@ -49,7 +49,7 @@ public class dashboardActivity extends AppCompatActivity {
                 Intent listPage = new Intent(dashboardActivity.this, listActivity.class);
                 listPage.putExtra("page", "list");
                 startActivity(listPage);
-                finish();
+                //finish();
             }
         });
 
@@ -60,7 +60,7 @@ public class dashboardActivity extends AppCompatActivity {
                 Intent listPage = new Intent(dashboardActivity.this, listActivity.class);
                 listPage.putExtra("page", "complete");
                 startActivity(listPage);
-                finish();
+                //finish();
             }
         });
 
@@ -72,10 +72,9 @@ public class dashboardActivity extends AppCompatActivity {
                 //intent.putExtra("page", "dash");
                 focusPage.putExtra("page", "focus");
                 startActivity(focusPage);
-                finish();
+                //finish();
             }
         });
 
 
     }
-}

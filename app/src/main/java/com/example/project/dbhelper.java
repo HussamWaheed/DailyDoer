@@ -51,6 +51,9 @@ public class dbhelper extends SQLiteOpenHelper {
             if (deleted > 0) {
                 db.setTransactionSuccessful();
                 success = true;
+                Log.d("DELETE", "Task with ID " + id + " deleted successfully.");
+            } else {
+                Log.d("DELETE", "No task with ID " + id + " found.");
             }
         } catch (Exception e) {
             Log.e("DELETE", "Error deleting task", e);
@@ -63,6 +66,7 @@ public class dbhelper extends SQLiteOpenHelper {
 
         return success;
     }
+
 
     /**
      * Moves specific task to archive using task ID
@@ -87,7 +91,13 @@ public class dbhelper extends SQLiteOpenHelper {
                 values.put("status", cursor.getString(5));
                 values.put("deleted_at", System.currentTimeMillis());
 
-                success = db.insert("deleted_tasks", null, values) != -1;
+                // Insert into deleted_tasks table
+                long insertResult = db.insert("deleted_tasks", null, values);
+                if (insertResult != -1) {
+                    // Now delete from the schedule table
+                    db.delete("schedule", "_id=?", new String[]{String.valueOf(taskId)});
+                    success = true;
+                }
             }
             cursor.close();
             db.setTransactionSuccessful();
@@ -99,6 +109,7 @@ public class dbhelper extends SQLiteOpenHelper {
             db.endTransaction();
         }
     }
+
 
     /**
      * Checks if a task exists in the database
@@ -159,6 +170,7 @@ public class dbhelper extends SQLiteOpenHelper {
         }
         return cursor;
     }
+
 
     public long editItem(String title, String newDescription, String date, String time, String status, String importance) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
