@@ -9,18 +9,16 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-/**
- * Database helper class for managing the application's SQLite database.
- * Handles all CRUD operations for tasks and maintains database schema.
- */
+
+
+// Maintains database schema and manages application's SQLite database.
 public class dbhelper extends SQLiteOpenHelper {
     // Singleton instance for database helper
     private static dbhelper instance;
 
-    /**
-     * Constructor for database helper
-     * @param context Application context
-     */
+
+
+    // Constructor for database helper
     public dbhelper(@Nullable Context context) {
         super(context, "dailyTask", null, 4); // Database name and version
     }
@@ -61,11 +59,10 @@ public class dbhelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    /**
-     * Permanently deletes a task from the database
-     * @param id The ID of the task to delete
-     * @return true if deletion was successful, false otherwise
-     */
+
+
+    // Permanently deletes a task from the database
+    // returns true if the deletion was successful
     public boolean deleteTask(int id) {
         SQLiteDatabase db = null;
         boolean success = false;
@@ -95,11 +92,10 @@ public class dbhelper extends SQLiteOpenHelper {
         return success;
     }
 
-    /**
-     * Archives a task by moving it to deleted_tasks table
-     * @param taskId The ID of the task to archive
-     * @return true if archiving was successful, false otherwise
-     */
+
+
+    // Moves task to deleted_tasks table.
+    // returns true if action was successful
     public boolean moveToDeletedTasks(int taskId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
@@ -141,11 +137,9 @@ public class dbhelper extends SQLiteOpenHelper {
         }
     }
 
-    /**
-     * Checks if a task exists in the database
-     * @param taskId The ID of the task to check
-     * @return true if task exists, false otherwise
-     */
+
+    // Checks if a task exists in the database
+    // returns true if exists, otherwise false
     public boolean taskExists(int taskId) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT 1 FROM schedule WHERE _id=?",
@@ -155,10 +149,9 @@ public class dbhelper extends SQLiteOpenHelper {
         return exists;
     }
 
-    /**
-     * Retrieves tasks deleted within the last 24 hours
-     * @return Cursor containing recently deleted tasks
-     */
+
+
+    // retrieves tasks deleted within the last 24 hours.
     public Cursor getRecentlyDeletedTasks() {
         SQLiteDatabase db = this.getReadableDatabase();
         long cutoff = System.currentTimeMillis() - (24 * 60 * 60 * 1000); // 24 hours ago
@@ -169,10 +162,10 @@ public class dbhelper extends SQLiteOpenHelper {
                 null, null, "deleted_at DESC"); // Newest deletions first
     }
 
-    /**
-     * Adds a new task to the database
-     * @return row ID of newly inserted task, or -1 if error occurred
-     */
+
+
+    // Adds new task to database
+    // returns row ID of newly craeted task, otherwise returns -1
     public long addItems(String title, String description, String date,
                          String time, String status, String importance) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -187,21 +180,19 @@ public class dbhelper extends SQLiteOpenHelper {
         return db.insert("schedule", null, values);
     }
 
-    /**
-     * Retrieves tasks filtered by completion status
-     * @param status "true" for completed, "false" for pending
-     * @return Cursor containing matching tasks
-     */
+
+
+    // Retrieves tasks filtered by completion status
+    // returns true for completed, false for pending
     public Cursor displayData(String status) {
         SQLiteDatabase db = getReadableDatabase();
         return db.rawQuery("SELECT * FROM schedule WHERE status=?",
                 new String[]{status});
     }
 
-    /**
-     * Deletes tasks matching title and date
-     * @return Cursor containing deleted tasks (for verification)
-     */
+
+
+    // Deletes tasks matching title and date
     public Cursor deleteData(String title, String date) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM schedule WHERE title=? AND date=?",
@@ -212,10 +203,9 @@ public class dbhelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    /**
-     * Updates an existing task
-     * @return number of rows affected
-     */
+    
+
+    // Updates Existing task
     public long editItem(String title, String newDescription, String date,
                          String time, String status, String importance) {
         SQLiteDatabase db = getWritableDatabase();
