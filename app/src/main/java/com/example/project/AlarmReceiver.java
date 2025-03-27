@@ -34,7 +34,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
 
         //create the intent to open the dashboard when the notification is clicked
-        Intent openDashboard = new Intent(context, dashboardActivity.class);
+        Intent openDashboard = new Intent(context, listActivity.class);
         openDashboard.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         //wrap intent in pendingIntent so it can be launched later
