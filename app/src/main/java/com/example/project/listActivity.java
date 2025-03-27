@@ -18,10 +18,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-/**
- * Activity that displays a list of tasks, either completed or pending
- * depending on the intent extras. Implements task deletion functionality.
- */
+
+
+//Displays list of tasks completed or pending
+    // Also implements task deletion activity
 public class listActivity extends AppCompatActivity implements calendarPage_Adapter.TaskDeleteListener {
 
     // UI Components
@@ -106,10 +106,10 @@ public class listActivity extends AppCompatActivity implements calendarPage_Adap
         recyclerView.setAdapter(myAdapter);
     }
 
-    /**
-     * Callback for when a task is deleted from the adapter
-     * @param taskId The ID of the task to delete
-     */
+
+
+    // Callback for when a task is deleted.
+    //uses taskID as primary ID
     @Override
     public void onDeleteTask(int taskId) {
         // Log pre-deletion state
@@ -137,10 +137,8 @@ public class listActivity extends AppCompatActivity implements calendarPage_Adap
         }
     }
 
-    /**
-     * Refreshes the task list from database
-     * Sorts tasks by date then time
-     */
+
+    //Sorts tasks by date and time and refreshes tasklist from database
     private void refreshTaskList() {
         dataSet.clear(); // Clear existing data
 
