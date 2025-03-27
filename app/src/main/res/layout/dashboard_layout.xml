@@ -13,51 +13,66 @@
         app:srcCompat="@drawable/logo" />
 
     <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-    <Button
-        android:id="@+id/all_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="All Tasks List"
-        android:layout_margin="20dp"
-        android:backgroundTint="@color/custom3"/>
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/all_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="All Tasks List"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/custom3"/>
 
-    <Button
-        android:id="@+id/calendar_btn"
-        android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/calendar_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Calendar View"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/custom3"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Calendar View"
-        android:layout_margin="20dp"
-        android:backgroundTint="@color/custom3"/>
-</LinearLayout>
+        android:orientation="horizontal">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+        <Button
+            android:id="@+id/complete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Completed Tasks List"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/custom3"/>
 
-    <Button
-        android:id="@+id/complete_btn"
-        android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Add a Task"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/custom3"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Completed Tasks List"
-        android:layout_margin="20dp"
-        android:backgroundTint="@color/custom3"/>
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/add_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Add a Task"
-        android:layout_margin="20dp"
-        android:backgroundTint="@color/custom3"/>
-</LinearLayout>
+        <Button
+            android:id="@+id/focus_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Focus Timer"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/custom3"/>
+    </LinearLayout>
 
 
 </LinearLayout>
