@@ -12,13 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 
-/**
- * MainActivity serves as the splash screen/launcher activity for the application.
- * Responsibilities:
- * - Displays app logo with animation
- * - Initializes notification channels
- * - Transitions to main dashboard after delay
- */
+
 public class MainActivity extends AppCompatActivity {
 
     private ImageView image; // View for displaying animated logo
@@ -51,10 +45,8 @@ public class MainActivity extends AppCompatActivity {
         createNotificationChannel();
     }
 
-    /**
-     * Creates notification channel required for Android 8.0+
-     * Channels are mandatory for displaying notifications on newer Android versions
-     */
+    
+    //Create notification for displaying mandatory notifications
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Configure channel properties
