@@ -18,12 +18,7 @@
         android:background="@color/custom3"
         app:srcCompat="?attr/homeAsUpIndicator" />
 
-    <Spinner
-        android:id="@+id/spinner_importance"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:entries="@array/importance_array" />
+
 
     <TextView
         android:id="@+id/title"
@@ -35,7 +30,12 @@
         android:textColor="@color/white"
         android:textSize="30sp" />
 </LinearLayout>
-
+    <Spinner
+        android:id="@+id/spinner_importance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:entries="@array/importance_array" />
     <EditText
         android:id="@+id/ed_title"
         android:layout_width="match_parent"
@@ -65,23 +65,22 @@
             android:calendarViewShown="false"
             android:datePickerMode="spinner" />
 
-        <TimePicker
-            android:id="@+id/time_pick"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:timePickerMode="spinner" />
+    <TimePicker
+        android:id="@+id/time_pick"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:timePickerMode="spinner" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="37dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/view_allDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_margin="20dp"
+            android:layout_marginLeft="20dp"
             android:text="All Day? "
             android:textSize="20sp" />
 
@@ -94,7 +93,7 @@
             android:layout_weight="1" />
     </LinearLayout>
 
-<LinearLayout
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
