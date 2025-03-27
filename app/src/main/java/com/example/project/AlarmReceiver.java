@@ -53,7 +53,11 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setContentText("Today, " + time)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)//set priority
                 .setContentIntent(pendingIntent)//opens dashboard
-                .setAutoCancel(true);
+                .setAutoCancel(true)//automatically dismisses the notification when clicked
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)//make visible on lock screen
+                .setFullScreenIntent(pendingIntent, true);
+
 
         //check if app ahs permission to post notifications
         if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
